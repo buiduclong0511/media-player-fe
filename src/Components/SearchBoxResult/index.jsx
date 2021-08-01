@@ -28,4 +28,5 @@ const Container = styled.div`
     box-shadow: 5px 3px 5px rgba(0, 0, 0, .3);
     border-radius: 8px;
     overflow: hidden;
+    border: 1px solid ${p => p.theme.colors.gray_5};
 `;

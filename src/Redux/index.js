@@ -7,7 +7,7 @@ import rootReducer from './slices';
 const persistConfig = {
     key: 'root',
     storage,
-    whiteList: ["auth"]
+    whitelist: ["auth"]
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
@@ -15,6 +15,8 @@ const persistedReducer = persistReducer(persistConfig, rootReducer)
 const store = configureStore({ 
     reducer: persistedReducer
 });
+
+export * from "./slices";
 
 export const persistor = persistStore(store);
 

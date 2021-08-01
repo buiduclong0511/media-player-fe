@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import { motion } from "framer-motion";
 
-export const StyledModal = styled.div`
+export const StyledModal = styled(motion.div)`
     z-index: 4;
     position: fixed;
     top: 0;
@@ -18,6 +19,6 @@ export const StyledModalOverLay = styled.div`
     background-color: rgba(0, 0, 0, .3);
 `;
 
-export const StyledModalContent = styled.div`
+export const StyledModalContent = styled(motion.div)`
     z-index: 1;
 `;

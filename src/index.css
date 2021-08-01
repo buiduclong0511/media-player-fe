@@ -23,7 +23,7 @@ body::-webkit-scrollbar-track {
  
 /* Handle */
 body::-webkit-scrollbar-thumb {
-  background: #ADD646; 
+  background: #7200A1; 
   border-radius: 10px;
 }
 

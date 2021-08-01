@@ -9,7 +9,8 @@ export const HeaderComponent = ({
     keySearch = "",
     onChangeKeySearch = () => {},
     result = [],
-    isSearching = false
+    isSearching = false,
+    onClickLoginBtn = () => {}
 }) => {
 
     return (
@@ -26,7 +27,7 @@ export const HeaderComponent = ({
                         <input type="text" value={keySearch} onChange={onChangeKeySearch} />
                         {isSearching && (
                             <div className="spinner">
-                                <ClipLoader color="#ADD646" size={20} />
+                                <ClipLoader color="#7200A1" size={20} />
                             </div>
                         )}
                         {keySearch && (
@@ -43,7 +44,7 @@ export const HeaderComponent = ({
                             </StyledButton>
                         </div>
                         <div className="btnItem loginButton flexCenter">
-                            <StyledButton>
+                            <StyledButton onClick={onClickLoginBtn}>
                                 Login
                             </StyledButton>
                         </div>
@@ -98,12 +99,12 @@ const Container = styled.div`
             padding: 10px 30px;
             width: 250px;
             border-radius: 100px;
-            border: 2px solid ${p => p.theme.colors.gray_3};
+            border: 1px solid ${p => p.theme.colors.gray_3};
             caret-color: ${p => p.theme.colors.main};
             background-color: ${p => p.theme.colors.gray_6};
 
             &:focus {
-                border: 2px solid ${p => p.theme.colors.main};
+                border: 1px solid ${p => p.theme.colors.main};
                 
             }
         }

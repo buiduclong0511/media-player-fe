@@ -1,10 +1,13 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 import { HeaderComponent } from "src/Components";
+import { showFormLogin } from "src/Redux";
 
 export const HeaderModule = () => {
     const [keySearch, setKeySearch] = useState("");
     const [isSearching, setIsSearching] = useState(false);
+    const dispatch = useDispatch();
     // eslint-disable-next-line no-unused-vars
     const [result, setResult] = useState([
         {
@@ -39,12 +42,16 @@ export const HeaderModule = () => {
             setIsSearching(false);
         }, 2000);
     };
+    const handleClickLoginBtn = () => {
+        dispatch(showFormLogin());
+    };
     return (
         <HeaderComponent
             keySearch={keySearch}
             onChangeKeySearch={handleChangeKeySearch}
             result={result}
             isSearching={isSearching}
+            onClickLoginBtn={handleClickLoginBtn}
         />
     );
 };
