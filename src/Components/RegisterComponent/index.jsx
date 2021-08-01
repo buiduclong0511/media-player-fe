@@ -2,31 +2,60 @@ import styled from "styled-components";
 
 import { StyledFormControl, InputComponent, StyledButton } from "src/Components";
 
-export const RegisterComponent = () => {
+export const RegisterComponent = ({
+    values = {},
+    errors = {},
+    touched = {},
+    onChange = () => {},
+    onBlur = () => {},
+    onSubmit = () => {},
+    isSubmitting = false
+}) => {
     return (
-        <Container>
+        <Container onSubmit={onSubmit}>
             <div className="heading">
                 Đăng ký
             </div>
             <StyledFormControl>
                 <InputComponent
-                    label="Email"
+                    label={"Email"}
+                    value={values.emailRegister}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    error={errors.emailRegister}
+                    touched={touched.emailRegister}
+                    name={"emailRegister"}
                 />
             </StyledFormControl>
             <StyledFormControl>
                 <InputComponent
-                    label="Password"
+                    label={"Password"}
+                    value={values.passwordRegister}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    error={errors.passwordRegister}
+                    touched={touched.passwordRegister}
+                    name={"passwordRegister"}
+                    type="password"
                 />
             </StyledFormControl>
             <StyledFormControl>
                 <InputComponent
-                    label="Confirm password"
+                    label={"Confirm password"}
+                    value={values.confirmPasswordRegister}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    error={errors.confirmPasswordRegister}
+                    touched={touched.confirmPasswordRegister}
+                    name={"confirmPasswordRegister"}
+                    type="password"
                 />
             </StyledFormControl>
             <StyledButton 
                 fullWidth 
                 mt={20}
                 fz={20}
+                type={"submit"}
             >
                 Đăng ký
             </StyledButton>

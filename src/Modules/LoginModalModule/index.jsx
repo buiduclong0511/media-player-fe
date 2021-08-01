@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { unwrapResult } from "@reduxjs/toolkit";
 
 import { 
     StyledModal, 
@@ -12,8 +13,8 @@ import {
 import { FORM_LOGIN, FORM_REGISTER } from "src/Constant";
 import { Formik } from 'formik';
 
-import { hideFormLogin } from "src/Redux";
-import { loginSchema } from "src/Utilities";
+import { hideFormLogin, login, register, showToast } from "src/Redux";
+import { loginSchema, registerSchema } from "src/Utilities";
 
 export const LoginModalModule = () => {
     const [key, setKey] = useState(FORM_LOGIN);
@@ -30,8 +31,14 @@ export const LoginModalModule = () => {
     };
 
     const initialValuesLogin = {
-        email: "",
-        password: ""
+        emailLogin: "test@gmail.com",
+        passwordLogin: "123@abc"
+    };
+
+    const initialValuesRegister = {
+        emailRegister: "",
+        passwordRegister: "",
+        confirmPasswordRegister: ""
     };
 
     return (
@@ -71,8 +78,21 @@ export const LoginModalModule = () => {
                                     <Formik
                                         initialValues={initialValuesLogin}
                                         validationSchema={loginSchema}
-                                        onSubmit={(values) => {
-                                            console.log(values);
+                                        onSubmit={async (values) => {
+                                            try {
+                                                const body = {
+                                                    email: values.emailLogin,
+                                                    password: values.passwordLogin
+                                                };
+                                                const res = await dispatch(login(body));
+                                                unwrapResult(res);
+                                                dispatch(hideFormLogin());
+                                            } catch (err) {
+                                                dispatch(showToast({
+                                                    message: "Sai tài khoản hoặc mật khẩu!",
+                                                    type: "error"
+                                                }))
+                                            }
                                         }}
                                     >
                                         {({
@@ -105,7 +125,58 @@ export const LoginModalModule = () => {
                         ) : (
                             <div className="form">
                                 <div className="formWrapper">
-                                    <RegisterComponent />
+                                    <Formik
+                                        initialValues={initialValuesRegister}
+                                        validationSchema={registerSchema}
+                                        onSubmit={async (values) => {
+                                            try {
+                                                const body = {
+                                                    email: values.emailRegister,
+                                                    password: values.passwordRegister
+                                                };
+                                                const res = await dispatch(register(body));
+                                                unwrapResult(res);
+                                                if (res) {
+                                                    dispatch(hideFormLogin());
+                                                }
+                                            } catch (err) {
+                                                console.log(err.response);
+                                                if (err.response.status === 409) {
+                                                    dispatch(showToast({
+                                                        message: "Email đã được đăng ký!",
+                                                        type: "error"
+                                                    }))
+                                                } else {
+                                                    dispatch(showToast({
+                                                        message: "Có lỗi xảy ra!",
+                                                        type: "error"
+                                                    }))
+                                                }
+                                            }
+                                        }}
+                                    >
+                                        {({
+                                            values,
+                                            errors,
+                                            touched,
+                                            handleChange,
+                                            handleBlur,
+                                            handleSubmit,
+                                            isSubmitting,
+                                        }) => {
+                                            return (
+                                                <RegisterComponent
+                                                    values={values}
+                                                    errors={errors}
+                                                    touched={touched}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                    onSubmit={handleSubmit}
+                                                    isSubmitting={isSubmitting}
+                                                />
+                                            );
+                                        }}
+                                    </Formik>
                                 </div>
                                 <p className="switchToRegister">
                                     Bạn đã có tài khoản? <span className="link" onClick={handleSwitchForm}>Đăng nhập</span>

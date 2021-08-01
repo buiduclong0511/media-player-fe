@@ -19,23 +19,23 @@ export const LoginComponent = ({
             <StyledFormControl>
                 <InputComponent
                     label={"Email"}
-                    value={values.email}
+                    value={values.emailLogin}
                     onChange={onChange}
                     onBlur={onBlur}
-                    error={errors.email}
-                    touched={touched.email}
-                    name={"email"}
+                    error={errors.emailLogin}
+                    touched={touched.emailLogin}
+                    name={"emailLogin"}
                 />
             </StyledFormControl>
             <StyledFormControl>
                 <InputComponent
                     label={"Password"}
-                    value={values.password}
+                    value={values.passwordLogin}
                     onChange={onChange}
                     onBlur={onBlur}
-                    error={errors.password}
-                    touched={touched.password}
-                    name={"password"}
+                    error={errors.passwordLogin}
+                    touched={touched.passwordLogin}
+                    name={"passwordLogin"}
                     type="password"
                 />
             </StyledFormControl>

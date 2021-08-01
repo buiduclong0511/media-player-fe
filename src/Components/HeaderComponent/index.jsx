@@ -2,8 +2,10 @@ import styled from "styled-components";
 import { BsUpload } from "react-icons/bs";
 import { BiSearchAlt } from "react-icons/bi";
 import ClipLoader from "react-spinners/ClipLoader";
+import { useDispatch, useSelector } from "react-redux";
 
-import { StyledButton , SearchBoxResult } from "src/Components";
+import { StyledButton , SearchBoxResult, Avatar } from "src/Components";
+import { logout } from "src/Redux";
 
 export const HeaderComponent = ({
     keySearch = "",
@@ -12,7 +14,8 @@ export const HeaderComponent = ({
     isSearching = false,
     onClickLoginBtn = () => {}
 }) => {
-
+    const auth = useSelector(state => state.auth);
+    const dispatch = useDispatch();
     return (
         <Container>
             <div className="grid wide">
@@ -43,11 +46,17 @@ export const HeaderComponent = ({
                                 <span className="text">Upload</span>
                             </StyledButton>
                         </div>
-                        <div className="btnItem loginButton flexCenter">
-                            <StyledButton onClick={onClickLoginBtn}>
-                                Login
-                            </StyledButton>
-                        </div>
+                        {!auth.accessToken ? (
+                            <div className="btnItem loginButton flexCenter">
+                                <StyledButton onClick={onClickLoginBtn}>
+                                    Login
+                                </StyledButton>
+                            </div> 
+                        ) : (
+                            <div className="avatar" onClick={() => dispatch(logout())}>
+                                <Avatar imagePath={auth.userInfo.avatarUrl} />
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
@@ -123,6 +132,10 @@ const Container = styled.div`
 
         .btnItem:first-child {
             margin-right: 10px;
+        }
+
+        .avatar {
+            cursor: pointer;
         }
     }
 `;

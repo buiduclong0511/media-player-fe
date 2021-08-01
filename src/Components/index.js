@@ -5,3 +5,5 @@ export * from "./SearchBoxResult";
 export * from "./LoginComponent";
 export * from './InputComponent';
 export * from "./RegisterComponent";
+export * from "./Avatar";
+export * from "./LoadingOverlayComponent";
