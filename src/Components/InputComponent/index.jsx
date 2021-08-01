@@ -6,7 +6,9 @@ export const InputComponent = ({
     onChange = () => {},
     onBlur = () => {},
     error = "",
-    touched = false
+    touched = false,
+    name = "",
+    type = "text"
 }) => {
     return (
         <TextField 
@@ -14,9 +16,12 @@ export const InputComponent = ({
             value={value}
             onChange={onChange}
             onBlur={onBlur}
-            helperText={error}
+            helperText={touched && !!error ? error : ""}
             error={!!error && touched}
             fullWidth
+            name={name}
+            type={type}
+            autoComplete={""}
         />
     );
 };

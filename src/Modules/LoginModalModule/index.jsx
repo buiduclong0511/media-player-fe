@@ -10,7 +10,10 @@ import {
     RegisterComponent
 } from "src/Components";
 import { FORM_LOGIN, FORM_REGISTER } from "src/Constant";
+import { Formik } from 'formik';
+
 import { hideFormLogin } from "src/Redux";
+import { loginSchema } from "src/Utilities";
 
 export const LoginModalModule = () => {
     const [key, setKey] = useState(FORM_LOGIN);
@@ -25,6 +28,12 @@ export const LoginModalModule = () => {
     const handleHideForm = () => {
         dispatch(hideFormLogin());
     };
+
+    const initialValuesLogin = {
+        email: "",
+        password: ""
+    };
+
     return (
         <StyledModal 
             className="flexCenter"
@@ -59,7 +68,35 @@ export const LoginModalModule = () => {
                         {key === FORM_LOGIN ? (
                             <div className="form">
                                 <div className="formWrapper">
-                                    <LoginComponent />
+                                    <Formik
+                                        initialValues={initialValuesLogin}
+                                        validationSchema={loginSchema}
+                                        onSubmit={(values) => {
+                                            console.log(values);
+                                        }}
+                                    >
+                                        {({
+                                            values,
+                                            errors,
+                                            touched,
+                                            handleChange,
+                                            handleBlur,
+                                            handleSubmit,
+                                            isSubmitting,
+                                        }) => {
+                                            return (
+                                                <LoginComponent
+                                                    values={values}
+                                                    errors={errors}
+                                                    touched={touched}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                    onSubmit={handleSubmit}
+                                                    isSubmitting={isSubmitting}
+                                                />
+                                            );
+                                        }}
+                                    </Formik>
                                 </div>
                                 <p className="switchToRegister">
                                     Bạn chưa có tài khoản? <span className="link" onClick={handleSwitchForm}>Đăng ký</span>
