@@ -57,4 +57,8 @@ const Container = styled.div`
             border-radius: 10px;
         }
     }
+
+    .react-multiple-carousel__arrow {
+        z-index: 0;
+    }
 `;
