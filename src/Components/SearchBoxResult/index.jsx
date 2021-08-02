@@ -1,24 +1,36 @@
 import styled from "styled-components";
 
-import { StyledSearchResultItem } from "src/Components";
+import { StyledSearchResultItem, StyledSearchAllItem } from "src/Components";
 
 export const SearchBoxResult = ({
-    result = []
+    result = [],
+    keySearch = ""
 }) => {
     return (
         <Container>
-            {result.map(item => {
+            {result.length ? result.map(item => {
                 return (
-                    <StyledSearchResultItem key={item.id}>
+                    <StyledSearchResultItem key={item._id}>
                         <p className="songName">
-                            {item.songName}
+                            {item.name}
                         </p>
                         <p className="singer">
                             {item.singer}
                         </p>
                     </StyledSearchResultItem>
                 );
-            })}
+            }) : (
+                <StyledSearchResultItem>
+                    <p className="songName">
+                        Không có kết quả
+                    </p>
+                </StyledSearchResultItem>
+            )}
+            <StyledSearchAllItem>
+                <p className="searchAll">
+                    Hiển thị tất cả: {keySearch}
+                </p>
+            </StyledSearchAllItem>
         </Container>
     );
 };

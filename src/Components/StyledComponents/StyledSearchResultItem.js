@@ -17,4 +17,8 @@ export const StyledSearchResultItem = styled.div`
         font-size: 14px;
         color: ${p => p.theme.colors.gray_3};
     }
-`
+`;
+
+export const StyledSearchAllItem = styled(StyledSearchResultItem)`
+    border-top: 1px solid ${p => p.theme.colors.gray_4};
+`;

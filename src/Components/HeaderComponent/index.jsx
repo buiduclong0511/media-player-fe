@@ -28,14 +28,14 @@ export const HeaderComponent = ({
                             <BiSearchAlt />
                         </div>
                         <input type="text" value={keySearch} onChange={onChangeKeySearch} />
-                        {isSearching && (
+                        {isSearching && keySearch && (
                             <div className="spinner">
                                 <ClipLoader color="#7200A1" size={20} />
                             </div>
                         )}
-                        {keySearch && (
+                        {keySearch && !isSearching && (
                             <div className="searchBoxResult">
-                                <SearchBoxResult result={result} />
+                                <SearchBoxResult result={result} keySearch={keySearch} />
                             </div>
                         )}
                     </div>
