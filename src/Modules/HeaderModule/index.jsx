@@ -1,62 +1,34 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 
 import { HeaderComponent } from "src/Components";
-import { showFormLogin } from "src/Redux";
-import { useDebounce } from "src/Utilities";
-import { songApi } from "src/Api";
-import { useEffect } from "react";
+import { PATH_LOGIN } from "src/Routes";
 
 export const HeaderModule = () => {
-    const [keySearch, setKeySearch] = useState("");
-    const [isSearching, setIsSearching] = useState(false);
-    const dispatch = useDispatch();
-    // eslint-disable-next-line no-unused-vars
-    const [result, setResult] = useState([]);
-    let timeout = null;
-    const handleChangeKeySearch = (e) => {
-        setIsSearching(true);
-        if (timeout) {
-            clearInterval(timeout);
-        }
-        setKeySearch(e.target.value);
-        timeout = setTimeout(() => {
-            setIsSearching(false);
-        }, 2000);
-    };
-    const handleClickLoginBtn = () => {
-        dispatch(showFormLogin());
-    };
-    const searchSong = () => {
-        if (keySearch.trim()) {
-            setIsSearching(true);
-            songApi.getListSongs({
-                q: keySearch
-            })
-            .then(res => {
-                setResult(res.data.data);
-            })
-            .catch(err => console.log(err))
-            .finally(() => {
-                setIsSearching(false);
-            });
-        }
-    };
-    useDebounce(searchSong, 500, [keySearch]);
+    const [isBlur, setIsBlur] = useState(false);
+    const history = useHistory();
 
-    const clearListResult = () => {
-        if (!keySearch.trim()) {
-            setResult([]);
+    const changeHeaderStatus = () => {
+        if (window.scrollY > 50) {
+            setIsBlur(true);
+        } else {
+            setIsBlur(false);
         }
-    }
-    useEffect(clearListResult, [keySearch]);
+    };
+
+    useEffect(() => {
+        document.addEventListener("scroll", changeHeaderStatus);
+
+        return () => {
+            document.removeEventListener("scroll", changeHeaderStatus)
+        };
+    }, []);
+
+    const handleClickLogin = () => {
+        history.push(PATH_LOGIN);
+    };
+
     return (
-        <HeaderComponent
-            keySearch={keySearch}
-            onChangeKeySearch={handleChangeKeySearch}
-            result={result}
-            isSearching={isSearching}
-            onClickLoginBtn={handleClickLoginBtn}
-        />
+        <HeaderComponent isBlur={isBlur} onClickLogin={handleClickLogin} />
     );
 };

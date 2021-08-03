@@ -73,6 +73,8 @@ const auth = createSlice({
     }
 });
 
+export const authSelector = state => state.auth;
+
 export const { logout } = auth.actions;
 
 export default auth.reducer;

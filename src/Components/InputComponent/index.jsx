@@ -1,27 +1,30 @@
-import TextField from "@material-ui/core/TextField";
+import { TextField } from "@material-ui/core";
+
 
 export const InputComponent = ({
     label = "",
     value = "",
-    onChange = () => {},
-    onBlur = () => {},
+    type = "text",
     error = "",
     touched = false,
     name = "",
-    type = "text"
+    onChange = () => {},
+    onBlur = () => {}
 }) => {
+
     return (
-        <TextField 
+        <TextField
             label={label}
+            fullWidth
             value={value}
+            type={type}
+            error={!!error && touched}
+            helperText={!!error && touched ? error : ""}
+            name={name}
+            variant="standard"
             onChange={onChange}
             onBlur={onBlur}
-            helperText={touched && !!error ? error : ""}
-            error={!!error && touched}
-            fullWidth
-            name={name}
-            type={type}
-            autoComplete={""}
+            autoComplete=""
         />
     );
 };

@@ -1,2 +1,3 @@
 export * from "./HeaderModule";
-export * from "./LoginModalModule";
+export * from "./LoginModule";
+export * from "./RegisterModule";

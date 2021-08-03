@@ -1,141 +1,99 @@
 import styled from "styled-components";
-import { BsUpload } from "react-icons/bs";
-import { BiSearchAlt } from "react-icons/bi";
-import ClipLoader from "react-spinners/ClipLoader";
-import { useDispatch, useSelector } from "react-redux";
+import { motion } from "framer-motion";
 
-import { StyledButton , SearchBoxResult, Avatar } from "src/Components";
-import { logout } from "src/Redux";
+import { StyledButton } from "src/Components";
 
 export const HeaderComponent = ({
-    keySearch = "",
-    onChangeKeySearch = () => {},
-    result = [],
-    isSearching = false,
-    onClickLoginBtn = () => {}
+    isBlur = false,
+    onClickLogin = () => {}
 }) => {
-    const auth = useSelector(state => state.auth);
-    const dispatch = useDispatch();
     return (
-        <Container>
-            <div className="grid wide">
-                <div className="headerWrapper flexCenter">
-                    <div className="logo">
-                        <img src="images/logos/logo.png" alt="" />
-                    </div>
-                    <div className="searchBox">
-                        <div className="searchIcon">
-                            <BiSearchAlt />
-                        </div>
-                        <input type="text" value={keySearch} onChange={onChangeKeySearch} />
-                        {isSearching && keySearch && (
-                            <div className="spinner">
-                                <ClipLoader color="#7200A1" size={20} />
-                            </div>
-                        )}
-                        {keySearch && !isSearching && (
-                            <div className="searchBoxResult">
-                                <SearchBoxResult result={result} keySearch={keySearch} />
-                            </div>
-                        )}
-                    </div>
-                    <div className="listBtn flexCenter">
-                        <div className="btnItem uploadButton flexCenter">
-                            <StyledButton type="noBg">
-                                <BsUpload />
-                                <span className="text">Upload</span>
-                            </StyledButton>
-                        </div>
-                        {!auth.accessToken ? (
-                            <div className="btnItem loginButton flexCenter">
-                                <StyledButton onClick={onClickLoginBtn}>
-                                    Login
-                                </StyledButton>
-                            </div> 
-                        ) : (
-                            <div className="avatar" onClick={() => dispatch(logout())}>
-                                <Avatar imagePath={auth.userInfo.avatarUrl} />
-                            </div>
-                        )}
-                    </div>
+        <Container 
+            className="flexCenter" 
+            isBlur={isBlur}
+            initial={{
+                y: -1000
+            }}
+            animate={{
+                y: 0
+            }}
+            transition={{
+                duration: .7
+            }}
+        >
+            <div className="searchBox flexCenter">
+                <span className="searchIcon">
+                    <ion-icon name="search-outline"></ion-icon>
+                </span>
+                <input type="text" />
+            </div>
+            <div className="menu flexCenter">
+                <button className="uploadBtn flexCenter">
+                    <span className="uploadIcon">
+                        <ion-icon name="cloud-upload-outline"></ion-icon>
+                    </span>
+                    <span className="text">
+                        Upload
+                    </span>
+                </button>
+                <div className="loginBtn">
+                    <StyledButton onClick={onClickLogin}>
+                        Đăng nhập
+                    </StyledButton>
                 </div>
             </div>
         </Container>
     );
 };
 
-const Container = styled.div`
-    border-bottom: 1px solid ${p => p.theme.colors.gray_4};
-    position: fixed;
+const Container = styled(motion.div)`
+    min-height: 60px;
+    justify-content: space-between;
+    padding: 0 10px;
+    position: sticky;
     top: 0;
-    left: 0;
-    width: 100vw;
-    z-index: 1;
-    background-color: #fff;
+    right: 0;
+    transition: backdrop-filter 300ms;
+    ${({ isBlur, theme }) => isBlur ? `
+        backdrop-filter: blur(5px);
+        border-bottom: 1px solid ${theme.colors.gray_1};
+    ` : ""}
+    
+    .menu {
+        .loginBtn {
+            margin-left: 10px;
+        }
+    }
 
-    .headerWrapper {
-        justify-content: space-between;
-        height: 70px;
+    .uploadBtn {
+        border-bottom: 1px solid transparent;
+
+        &:hover {
+            border-bottom: 1px solid #fff;
+        }
+
+        .text {
+            margin-left: 5px;
+            margin-bottom: 2px;
+        }
     }
 
     .searchBox {
-        display: flex;
-        position: relative;
-
-        .searchIcon {
-            position: absolute;
-            top: calc(50% + 2px);
-            left: 10px;
-            transform: translateY(-50%);
-        }
-
-        .spinner {
-            position: absolute;
-            top: 50%;
-            right: 10px;
-            transform: translateY(-50%);
-        }
-
-        .searchBoxResult {
-            position: absolute;
-            top: calc(100% + 10px);
-            left: 0;
-            width: 100%;
-        }
+        background-color: ${p => p.theme.colors.gray_1};
+        padding: 10px 20px;
+        border-radius: 100px;
+        margin-left: 30px;
+        min-width: 300px;
 
         input {
-            display: inline-block;
-            padding: 10px 30px;
-            width: 250px;
-            border-radius: 100px;
-            border: 1px solid ${p => p.theme.colors.gray_3};
-            caret-color: ${p => p.theme.colors.main};
-            background-color: ${p => p.theme.colors.gray_6};
-
-            &:focus {
-                border: 1px solid ${p => p.theme.colors.main};
-                
-            }
-        }
-    }
-
-    .logo {
-        height: 100%;
-
-        img {
-            height: 100%;
-        }
-    }
-
-    .listBtn {
-        display: flex;
-
-        .btnItem:first-child {
-            margin-right: 10px;
+            border: none;
+            padding: 0 5px;
+            flex: 1;
         }
 
-        .avatar {
-            cursor: pointer;
+        .searchIcon {
+            position: relative;
+            top: 2px;
         }
     }
 `;
