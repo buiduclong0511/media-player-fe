@@ -23,6 +23,7 @@ export const SideBarComponent = () => {
 
 const Container = styled(motion.div)`
     background-color: ${p => p.theme.colors.secondary};
+    box-shadow: 3px 0 10px rgba(0, 0, 0, .3);
     min-height: 100vh;
     position: sticky;
     top: 0;

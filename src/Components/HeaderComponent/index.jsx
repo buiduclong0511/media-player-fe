@@ -1,11 +1,20 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
+import { ClipLoader } from "react-spinners";
 
 import { StyledButton } from "src/Components";
+import { SearchResultBox } from "../SearchResultBox";
 
 export const HeaderComponent = ({
     isBlur = false,
-    onClickLogin = () => {}
+    onClickLogin = () => {},
+    keySearch = "",
+    isSearching = false,
+    onChangeKeySearch = () => {},
+    searchResult = [],
+    isShowSearchResultBox = false,
+    onShowSearchResultBox = () => {},
+    onHiddenSearchResultBox = () => {},
 }) => {
     return (
         <Container 
@@ -25,7 +34,17 @@ export const HeaderComponent = ({
                 <span className="searchIcon">
                     <ion-icon name="search-outline"></ion-icon>
                 </span>
-                <input type="text" />
+                <input type="text" value={keySearch} onChange={onChangeKeySearch} onFocus={onShowSearchResultBox} onBlur={onHiddenSearchResultBox} />
+                {isSearching && (
+                    <span className="spinner">
+                        <ClipLoader size={16} color="#fff" />
+                    </span>
+                )}
+                {!!searchResult.length && !isSearching && isShowSearchResultBox && (
+                    <div className="searchResult">
+                        <SearchResultBox keySearch={keySearch} searchResult={searchResult} />
+                    </div>
+                )}
             </div>
             <div className="menu flexCenter">
                 <button className="uploadBtn flexCenter">
@@ -84,6 +103,7 @@ const Container = styled(motion.div)`
         border-radius: 100px;
         margin-left: 30px;
         min-width: 300px;
+        position: relative;
 
         input {
             border: none;
@@ -94,6 +114,20 @@ const Container = styled(motion.div)`
         .searchIcon {
             position: relative;
             top: 2px;
+        }
+
+        .spinner {
+            position: absolute;
+            top: calc(50% + 2px);
+            right: 15px;
+            transform: translateY(-50%);
+        }
+
+        .searchResult {
+            position: absolute;
+            top: calc(100% + 5px);
+            left: 0;
+            width: 100%;
         }
     }
 `;

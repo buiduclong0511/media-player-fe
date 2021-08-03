@@ -2,7 +2,7 @@
 export default {
     colors: {
         main: "#170F23",
-        secondary: "#231B2E",
+        secondary: "#3F0537",
         purple: "#7200A1",
         orange: "#FF5D24",
         gray: "#F6F6F6",
