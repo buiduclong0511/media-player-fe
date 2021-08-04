@@ -29,7 +29,7 @@ const listPlaying = createSlice({
             state.isPlaying = false;
         },
         refreshPlaylist: (state) => {
-            state.listPlaying = [];
+            state.playlist = [];
         }
     }
 });

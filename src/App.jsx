@@ -2,20 +2,30 @@ import ReactJkMusicPlayer from "react-jinke-music-player";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-jinke-music-player/assets/index.css'
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRef } from "react";
 
 import { Layout } from "src/Layout";
-import { listPlayingSelector } from "src/Redux";
+import { listPlayingSelector, replacePlaylist, updateHistory } from "src/Redux";
+import { convertSongInfo } from "src/Utilities";
 
 
 export const App = () => {
     const listPlaying = useSelector(listPlayingSelector).playlist;
     const isPlaying = useSelector(listPlayingSelector).isPlaying;
     const audioRef = useRef(null);
+    const dispatch = useDispatch();
     
     const getAudioRef = (ref) => {
         audioRef.current = ref;
+    };
+
+    const handlePlaylistChange = (currentPlayId, audioLists, audioInfo) => {
+        dispatch(replacePlaylist(audioLists));
+    };
+
+    const handleAudioPlay = (audioInfo) => {
+        dispatch(updateHistory(convertSongInfo(audioInfo)));
     };
 
     return (
@@ -42,6 +52,8 @@ export const App = () => {
                 clearPriorAudioLists
                 showThemeSwitch={false}
                 theme={"dark"}
+                onAudioListsChange={handlePlaylistChange}
+                onAudioPlay={handleAudioPlay}
             />
         </div>
     );

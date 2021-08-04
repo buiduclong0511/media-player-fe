@@ -1,21 +1,28 @@
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
-export const SongItem = ({
+import { listPlayingSelector } from "src/Redux";
+
+export const SongItemComponent = ({
     data = null,
     onClickPlayBtn = () => {},
     onClickAddBtn = () => {}
 }) => {
+    const listPlaying = useSelector(listPlayingSelector).playlist;
+    const isExisted = listPlaying.some(song => song.musicSrc === data.musicSrc);
     return (
         <Container>
             <div className="thumb" title={data.name}>
-                <img src={data.thumbUrl} alt={data.name} />
+                <img src={data.cover} alt={data.name} />
                 <div className="groupBtn flexCenter">
                     <button className="playBtn" onClick={onClickPlayBtn}>
                         <ion-icon name="play-circle-outline"></ion-icon>
                     </button>
-                    <button className="addBtn" onClick={onClickAddBtn}>
-                        <ion-icon name="add-circle"></ion-icon>
-                    </button>
+                    {!isExisted && (
+                        <button className="addBtn" onClick={onClickAddBtn}>
+                            <ion-icon name="add-circle"></ion-icon>
+                        </button>
+                    )}
                 </div>
             </div>
         </Container>

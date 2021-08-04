@@ -89,6 +89,7 @@ const Container = styled(motion.div)`
 
     .uploadBtn {
         border-bottom: 1px solid transparent;
+        font-size: 16px;
 
         &:hover {
             border-bottom: 1px solid #fff;
