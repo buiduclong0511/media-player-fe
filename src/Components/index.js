@@ -7,3 +7,4 @@ export * from "./FormLoginComponent";
 export * from "./FormRegisterComponent";
 export * from "./LoadingOverLay";
 export * from "./SearchResultBox";
+export * from "./SongItem";

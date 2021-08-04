@@ -20,7 +20,7 @@ export const SearchResultBox = ({
                 );
             })}
             <div className="showAll searchResultItem">
-                Hiển thị tất cả với: {keySearch}
+                {!!searchResult.length ? `Hiển thị tất cả với: ${keySearch}` : `Không tìm thấy bài hát nào với: ${keySearch}`}
             </div>
         </Container>
     );

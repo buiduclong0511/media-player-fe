@@ -40,7 +40,7 @@ export const HeaderComponent = ({
                         <ClipLoader size={16} color="#fff" />
                     </span>
                 )}
-                {!!searchResult.length && !isSearching && isShowSearchResultBox && (
+                {isShowSearchResultBox && (
                     <div className="searchResult">
                         <SearchResultBox keySearch={keySearch} searchResult={searchResult} />
                     </div>
@@ -66,16 +66,19 @@ export const HeaderComponent = ({
 };
 
 const Container = styled(motion.div)`
-    min-height: 60px;
+    height: 80px;
     justify-content: space-between;
     padding: 0 10px;
     position: sticky;
     top: 0;
     right: 0;
-    transition: backdrop-filter 300ms;
+    transition: height 300ms;
+    z-index: 1;
     ${({ isBlur, theme }) => isBlur ? `
         backdrop-filter: blur(5px);
         border-bottom: 1px solid ${theme.colors.gray_1};
+        box-shadow: 0 3px 7px rgba(0, 0, 0, .3);
+        height: 60px;
     ` : ""}
     
     .menu {

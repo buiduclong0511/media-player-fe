@@ -12,6 +12,7 @@ export default {
         gray_4: "#BDBDBD",
         gray_5: "#E0E0E0",
         gray_6: "#F2F2F2",
-        black: "#231B2E"
+        black: "#231B2E",
+        bgBtn: "#430538"
     }
 }

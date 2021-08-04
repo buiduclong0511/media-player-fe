@@ -7,6 +7,6 @@ export const StyledButton = styled.button`
     transition: 300ms;
     
     &:hover {
-        background-color: ${p => p.theme.colors.orange};
+        background-color: ${p => p.theme.colors.secondary};
     }
 `;

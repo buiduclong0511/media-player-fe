@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 import { songApi } from "src/Api";
 
 import { HeaderComponent } from "src/Components";
@@ -12,6 +13,7 @@ export const HeaderModule = () => {
     const [isBlur, setIsBlur] = useState(false);
     const [searchResult, setSearchResult] = useState([]);
     const [isShowSearchResultBox, setIsShowSearchResultBox] = useState(false);
+    const [isSearched, setIsSearched] = useState(false);
     const history = useHistory();
 
     const changeHeaderStatus = () => {
@@ -38,16 +40,30 @@ export const HeaderModule = () => {
             });
             setSearchResult(res.data.data);
         } catch (err) {
-            console.log(err);
+            if (!err.response) {
+                toast.error("Lỗi kết nối!");
+            }
         } finally {
             setIsSearching(false);
+            setIsSearched(true);
         }
     };
+
+    useEffect(() => {
+        if (isSearched) {
+            handleShowSearchResultBox();
+        } else {
+            handleHiddenSearchResultBox();
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isSearched]);
 
     useDebounce(() => {
         setSearchResult([]);
         if (keySearch.trim()) {
             handleSearch();
+        } else if (isSearched) {
+            setIsSearched(false);
         }
     }, 500, [keySearch]);
 
@@ -60,6 +76,7 @@ export const HeaderModule = () => {
     };
 
     const handleShowSearchResultBox = () => {
+        if (!isSearched) return;
         setIsShowSearchResultBox(true);
     };
 
