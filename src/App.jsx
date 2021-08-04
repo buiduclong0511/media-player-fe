@@ -2,8 +2,8 @@ import ReactJkMusicPlayer from "react-jinke-music-player";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-jinke-music-player/assets/index.css'
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
+import { useRef } from "react";
 
 import { Layout } from "src/Layout";
 import { listPlayingSelector } from "src/Redux";
@@ -40,6 +40,8 @@ export const App = () => {
                 autoPlay={isPlaying}
                 getAudioInstance={getAudioRef}
                 clearPriorAudioLists
+                showThemeSwitch={false}
+                theme={"dark"}
             />
         </div>
     );
