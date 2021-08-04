@@ -6,13 +6,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRef } from "react";
 
 import { Layout } from "src/Layout";
-import { listPlayingSelector, replacePlaylist, updateHistory } from "src/Redux";
+import { playerSelector, replacePlaylist, updateHistory } from "src/Redux";
 import { convertSongInfo } from "src/Utilities";
+import { useEffect } from "react";
 
 
 export const App = () => {
-    const listPlaying = useSelector(listPlayingSelector).playlist;
-    const isPlaying = useSelector(listPlayingSelector).isPlaying;
+    const playerRedux = useSelector(playerSelector);
+    const listPlaying = playerRedux.playlist;
+    const isPlaying = playerRedux.isPlaying;
+    const isClosed = playerRedux.isClosed;
     const audioRef = useRef(null);
     const dispatch = useDispatch();
     
@@ -54,6 +57,7 @@ export const App = () => {
                 theme={"dark"}
                 onAudioListsChange={handlePlaylistChange}
                 onAudioPlay={handleAudioPlay}
+                
             />
         </div>
     );

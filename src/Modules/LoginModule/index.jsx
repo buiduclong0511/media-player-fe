@@ -9,7 +9,7 @@ import { login } from "src/Redux";
 import { PATH_HOME } from "src/Routes";
 import { loginSchema } from "src/Utilities";
 
-export const LoginModule = () => {
+export const LoginModule = ({ onToggleLogin = () => {} }) => {
     const dispatch = useDispatch();
     const history = useHistory()
     const initialValuesLogin = {
@@ -24,7 +24,7 @@ export const LoginModule = () => {
                     const res = await dispatch(login(values));
                     unwrapResult(res);
                     if (res) {
-                        history.push(PATH_HOME);
+                        onToggleLogin();
                     }
                 } catch (err) {
                     setSubmitting(false);

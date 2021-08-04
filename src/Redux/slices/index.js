@@ -1,16 +1,16 @@
 import { combineReducers } from 'redux';
 
 import authReducer from "./auth";
-import listPlayingReducer from "./listPlaying";
+import playerReducer from "./player";
 import historyReducer from "./history";
 
 export * from './auth';
-export * from './listPlaying';
+export * from './player';
 export * from './history';
 
 const rootReducer = combineReducers({
     auth: authReducer,
-    listPlaying: listPlayingReducer,
+    player: playerReducer,
     history: historyReducer,
 });
 

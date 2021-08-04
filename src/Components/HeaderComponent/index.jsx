@@ -75,7 +75,7 @@ const Container = styled(motion.div)`
     transition: height 300ms;
     z-index: 1;
     ${({ isBlur, theme }) => isBlur ? `
-        backdrop-filter: blur(5px);
+        backdrop-filter: blur(10px);
         border-bottom: 1px solid ${theme.colors.gray_1};
         box-shadow: 0 3px 7px rgba(0, 0, 0, .3);
         height: 60px;

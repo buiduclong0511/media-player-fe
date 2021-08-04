@@ -16,15 +16,7 @@ export const FormLoginComponent = ({
 }) => {
     
     return (
-        <Container
-            initial={{
-                x: 1000
-            }}
-            animate={{
-                x: 0
-            }}
-            onSubmit={onSubmit}
-        >
+        <Container onSubmit={onSubmit}>
             <div className="heading">
                 Login
             </div>
@@ -64,7 +56,7 @@ const Container = styled(motion.form)`
     display: flex;
     flex-direction: column;
     min-height: 350px;
-    border: 1px solid ${p => p.theme.colors.gray_3};
+    /* border: 1px solid ${p => p.theme.colors.gray_3}; */
     padding: 20px;
     border-radius: 8px;
     min-width: 300px;

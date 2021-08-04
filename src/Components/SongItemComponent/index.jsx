@@ -1,14 +1,14 @@
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 
-import { listPlayingSelector } from "src/Redux";
+import { playerSelector } from "src/Redux";
 
 export const SongItemComponent = ({
     data = null,
     onClickPlayBtn = () => {},
     onClickAddBtn = () => {}
 }) => {
-    const listPlaying = useSelector(listPlayingSelector).playlist;
+    const listPlaying = useSelector(playerSelector).playlist;
     const isExisted = listPlaying.some(song => song.musicSrc === data.musicSrc);
     return (
         <Container>

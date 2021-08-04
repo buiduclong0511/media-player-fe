@@ -4,7 +4,7 @@ import { PacmanLoader } from "react-spinners";
 export const LoadingOverLay = () => {
     return (
         <Container className="flexCenter">
-            <PacmanLoader color="#36D7B7" />
+            <PacmanLoader color="#7200A1" />
         </Container>
     );
 };
@@ -16,4 +16,5 @@ const Container = styled.div`
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, .3);
+    z-index: 100000;
 `;

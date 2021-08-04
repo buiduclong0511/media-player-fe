@@ -3,10 +3,11 @@ const { createSlice } = require("@reduxjs/toolkit");
 const initialState = {
     playlist: [],
     isPlaying: false,
+    isClosed: false
 }
 
-const listPlaying = createSlice({
-    name: "listPlaying",
+const player = createSlice({
+    name: "player",
     initialState,
     reducers: {
         concatPlaylist: (state, action) => {
@@ -30,18 +31,26 @@ const listPlaying = createSlice({
         },
         refreshPlaylist: (state) => {
             state.playlist = [];
+        },
+        closePlayer: (state) => {
+            state.isClosed = true;
+        },
+        openPlayer: (state) => {
+            state.isClosed = false;
         }
     }
 });
 
-export const listPlayingSelector = state => state.listPlaying;
+export const playerSelector = state => state.player;
 
 export const {
     concatPlaylist,
     play,
     pause,
     replacePlaylist,
-    refreshPlaylist
-} = listPlaying.actions;
+    refreshPlaylist,
+    closePlayer,
+    openPlayer
+} = player.actions;
 
-export default listPlaying.reducer;
+export default player.reducer;

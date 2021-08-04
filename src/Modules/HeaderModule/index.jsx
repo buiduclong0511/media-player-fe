@@ -3,8 +3,7 @@ import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import { songApi } from "src/Api";
 
-import { HeaderComponent } from "src/Components";
-import { PATH_LOGIN } from "src/Routes";
+import { HeaderComponent, LoginModalComponent } from "src/Components";
 import { useDebounce } from "src/Utilities";
 
 export const HeaderModule = () => {
@@ -14,6 +13,7 @@ export const HeaderModule = () => {
     const [searchResult, setSearchResult] = useState([]);
     const [isShowSearchResultBox, setIsShowSearchResultBox] = useState(false);
     const [isSearched, setIsSearched] = useState(false);
+    const [isShowLogin, setIsShowLogin] = useState(false);
     const history = useHistory();
 
     const changeHeaderStatus = () => {
@@ -67,8 +67,8 @@ export const HeaderModule = () => {
         }
     }, 500, [keySearch]);
 
-    const handleClickLogin = () => {
-        history.push(PATH_LOGIN);
+    const handleToggleLogin = () => {
+        setIsShowLogin(prevState => !prevState);
     };
 
     const handleChangeKeySearch = (event) => {
@@ -85,16 +85,23 @@ export const HeaderModule = () => {
     };
 
     return (
-        <HeaderComponent 
-            isBlur={isBlur} 
-            onClickLogin={handleClickLogin} 
-            keySearch={keySearch}
-            isSearching={isSearching}
-            onChangeKeySearch={handleChangeKeySearch}
-            searchResult={searchResult}
-            isShowSearchResultBox={isShowSearchResultBox}
-            onShowSearchResultBox={handleShowSearchResultBox}
-            onHiddenSearchResultBox={handleHiddenSearchResultBox}
-        />
+        <>
+            <HeaderComponent 
+                isBlur={isBlur} 
+                onClickLogin={handleToggleLogin} 
+                keySearch={keySearch}
+                isSearching={isSearching}
+                onChangeKeySearch={handleChangeKeySearch}
+                searchResult={searchResult}
+                isShowSearchResultBox={isShowSearchResultBox}
+                onShowSearchResultBox={handleShowSearchResultBox}
+                onHiddenSearchResultBox={handleHiddenSearchResultBox}
+            />
+            {isShowLogin && (
+                <LoginModalComponent
+                    onToggleLogin={handleToggleLogin}
+                />
+            )}
+        </>
     );
 };

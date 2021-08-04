@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { songApi } from "src/Api";
 import { StyledHomePage, SongItemComponent } from "src/Components";
-import { concatPlaylist, historySelector, play, replacePlaylist } from "src/Redux";
+import { concatPlaylist, historySelector, openPlayer, play, replacePlaylist } from "src/Redux";
 import { convertSongInfo } from "src/Utilities";
 
 const ADD_TAG = "add";
@@ -27,6 +27,11 @@ export const Home = () => {
 
     useEffect(() => {
         fetchSongs();
+    }, []);
+
+    useEffect(() => {
+        dispatch(openPlayer());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleClickSong = (song, tag = REPLACE_TAG) => {

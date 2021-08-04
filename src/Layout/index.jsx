@@ -19,7 +19,6 @@ export const Layout = () => {
         <Grid>
             <Router>
                 <Switch>
-                    <Route path={PATH_LOGIN} component={Login} exact />
                     <Row noGutters>
                         <Column 
                             sizeDesktop={2}
@@ -34,11 +33,13 @@ export const Layout = () => {
                             size={12}
                         >
                             
-                            <StyledBackground />
-                            <HeaderModule />
-                            <Switch>
-                                {router.map((route, index) => <Route key={index} path={route.path} component={route.component} exact />)}
-                            </Switch>
+                            <div className="main" style={{ paddingBottom: "80px" }}>
+                                <StyledBackground />
+                                <HeaderModule />
+                                <Switch>
+                                    {router.map((route, index) => <Route key={index} path={route.path} component={route.component} exact />)}
+                                </Switch>
+                            </div>
                         </Column>
                     </Row>
                 </Switch>

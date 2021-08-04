@@ -9,7 +9,7 @@ import { register } from "src/Redux";
 import { PATH_HOME } from "src/Routes";
 import { registerSchema } from "src/Utilities";
 
-export const RegisterModule = () => {
+export const RegisterModule = ({ onToggleLogin = () => {} }) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const initialValues = {
@@ -26,7 +26,7 @@ export const RegisterModule = () => {
                     const res = await dispatch(register(body));
                     unwrapResult(res);
                     if (res) {
-                        history.push(PATH_HOME);
+                        onToggleLogin();
                     }
                 } catch (err) {
                     setSubmitting(false);
