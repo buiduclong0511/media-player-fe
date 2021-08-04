@@ -1,17 +1,14 @@
 import { unwrapResult } from "@reduxjs/toolkit";
 import { Formik } from "formik";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { FormLoginComponent } from "src/Components";
 import { login } from "src/Redux";
-import { PATH_HOME } from "src/Routes";
 import { loginSchema } from "src/Utilities";
 
 export const LoginModule = ({ onToggleLogin = () => {} }) => {
     const dispatch = useDispatch();
-    const history = useHistory()
     const initialValuesLogin = {
         email: "buiduclong0511@gmail.com",
         password: "123@abc"

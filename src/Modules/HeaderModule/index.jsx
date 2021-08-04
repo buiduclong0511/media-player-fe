@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import { songApi } from "src/Api";
 
@@ -14,7 +13,6 @@ export const HeaderModule = () => {
     const [isShowSearchResultBox, setIsShowSearchResultBox] = useState(false);
     const [isSearched, setIsSearched] = useState(false);
     const [isShowLogin, setIsShowLogin] = useState(false);
-    const history = useHistory();
 
     const changeHeaderStatus = () => {
         if (window.scrollY > 50) {

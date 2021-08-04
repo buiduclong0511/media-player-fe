@@ -1,17 +1,14 @@
 import { unwrapResult } from "@reduxjs/toolkit";
 import { Formik } from "formik";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { FormRegisterComponent } from "src/Components";
 import { register } from "src/Redux";
-import { PATH_HOME } from "src/Routes";
 import { registerSchema } from "src/Utilities";
 
 export const RegisterModule = ({ onToggleLogin = () => {} }) => {
     const dispatch = useDispatch();
-    const history = useHistory();
     const initialValues = {
         email: "",
         password: "",

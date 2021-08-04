@@ -9,10 +9,9 @@ import {
     Column
 } from '@mycv/mycv-grid'
 
-import { PATH_LOGIN, router } from "src/Routes";
+import { router } from "src/Routes";
 import { SideBarComponent, StyledBackground } from "src/Components";
 import { HeaderModule } from "src/Modules";
-import { Login } from "src/Pages";
 
 export const Layout = () => {
     return (

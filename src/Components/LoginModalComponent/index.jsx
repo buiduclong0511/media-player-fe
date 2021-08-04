@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { StyledBackgroundLogin, StyledLoginPage, LoadingOverLay } from "src/Components";
+import { LoadingOverLay } from "src/Components";
 import { FORM_LOGIN, FORM_REGISTER } from "src/Constant";
 import { LoginModule, RegisterModule } from "src/Modules";
 import { authSelector, closePlayer } from "src/Redux";

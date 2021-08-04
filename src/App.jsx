@@ -8,14 +8,12 @@ import { useRef } from "react";
 import { Layout } from "src/Layout";
 import { playerSelector, replacePlaylist, updateHistory } from "src/Redux";
 import { convertSongInfo } from "src/Utilities";
-import { useEffect } from "react";
 
 
 export const App = () => {
     const playerRedux = useSelector(playerSelector);
     const listPlaying = playerRedux.playlist;
     const isPlaying = playerRedux.isPlaying;
-    const isClosed = playerRedux.isClosed;
     const audioRef = useRef(null);
     const dispatch = useDispatch();
     
