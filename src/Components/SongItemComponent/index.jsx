@@ -30,12 +30,19 @@ export const SongItemComponent = ({
                 </div>
             ) : (
                 <div className="wrapperMobile">
-                    <div className="thumb">
+                    <div className="thumb" onClick={onClickPlayBtn}>
                         <img src={data.cover} alt={data.name} />
                     </div>
-                    <div className="info">
+                    <div className="info" onClick={onClickPlayBtn}>
                         <h3 className="songName">{data.name}</h3>
                         <p className="singer">{data.singer}</p>
+                    </div>
+                    <div className="add flexCenter">
+                        {!isExisted && (
+                            <button className="addBtn" onClick={onClickAddBtn}>
+                                <ion-icon name="add-circle"></ion-icon>
+                            </button>
+                        )}
                     </div>
                 </div>
             )}
@@ -84,11 +91,25 @@ const Container = styled.div`
         padding-bottom: 10px;
 
         .thumb {
-            width: 70px;
+            width: 50px;
             margin-right: 10px;
 
             img {
                 width: 100%;
+            }
+        }
+
+        .info {
+            flex: 1;
+
+            .songName {
+                max-width: 185px;
+            }
+        }
+
+        .add {
+            .addBtn {
+                font-size: 20px;
             }
         }
     }

@@ -12,5 +12,9 @@ export const songApi = {
         }).join("");
         const url = "/songs" + queryParams;
         return axiosClient.get(url);
+    },
+    incrementView: (slug) => {
+        const url = "/songs/" + slug;
+        return axiosClient.post(url);
     }
 };

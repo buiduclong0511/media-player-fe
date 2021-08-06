@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     history: [],
-    recently: []
+    recently: [],
 };
 
 const history = createSlice({

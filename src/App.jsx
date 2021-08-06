@@ -6,16 +6,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRef } from "react";
 
 import { Layout } from "src/Layout";
-import { playerSelector, replacePlaylist, updateHistory } from "src/Redux";
+import { addPlayedSong, playerSelector, replacePlaylist, updateHistory } from "src/Redux";
 import { convertSongInfo } from "src/Utilities";
+import { songApi } from "src/Api";
 
 
 export const App = () => {
     const playerRedux = useSelector(playerSelector);
     const listPlaying = playerRedux.playlist;
     const isPlaying = playerRedux.isPlaying;
+    const listPlayedSongs = playerRedux.listPlayedSongs;
     const audioRef = useRef(null);
     const dispatch = useDispatch();
+    const volumeRef = useRef(null);
     
     const getAudioRef = (ref) => {
         audioRef.current = ref;
@@ -26,7 +29,27 @@ export const App = () => {
     };
 
     const handleAudioPlay = (audioInfo) => {
+        console.log("play");
+        if (!volumeRef.current) {
+            audioRef.current.volume = 0.99;
+            volumeRef.current = audioRef.current.volume;
+        }
         dispatch(updateHistory(convertSongInfo(audioInfo)));
+    };
+
+    const handleAudioProgress = (audioInfo) => {
+        const progress = 100 / audioInfo.duration * audioInfo.currentTime;
+        if (progress >= 50) {
+            const isPlayed = listPlayedSongs.some(slug => slug === audioInfo.key);
+            if (!isPlayed) {
+                songApi.incrementView(audioInfo.key)
+                .then(console.log)
+                .catch(console.log)
+                .finally(() => {
+                    dispatch(addPlayedSong(audioInfo.key));
+                });
+            }
+        }
     };
 
     return (
@@ -55,7 +78,7 @@ export const App = () => {
                 theme={"dark"}
                 onAudioListsChange={handlePlaylistChange}
                 onAudioPlay={handleAudioPlay}
-                
+                onAudioProgress={handleAudioProgress}
             />
         </div>
     );

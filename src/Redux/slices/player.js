@@ -3,7 +3,8 @@ const { createSlice } = require("@reduxjs/toolkit");
 const initialState = {
     playlist: [],
     isPlaying: false,
-    isClosed: false
+    isClosed: false,
+    listPlayedSongs: []
 }
 
 const player = createSlice({
@@ -37,6 +38,9 @@ const player = createSlice({
         },
         openPlayer: (state) => {
             state.isClosed = false;
+        },
+        addPlayedSong: (state, action) => {
+            state.listPlayedSongs.push(action.payload);
         }
     }
 });
@@ -50,7 +54,8 @@ export const {
     replacePlaylist,
     refreshPlaylist,
     closePlayer,
-    openPlayer
+    openPlayer,
+    addPlayedSong
 } = player.actions;
 
 export default player.reducer;
