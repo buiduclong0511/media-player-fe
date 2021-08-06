@@ -10,3 +10,4 @@ export * from "./SearchResultBox";
 export * from "./SongItemComponent";
 export * from "./SideBarItemComponent";
 export * from "./LoginModalComponent";
+export * from "./FooterComponent";

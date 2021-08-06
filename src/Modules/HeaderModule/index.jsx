@@ -13,6 +13,7 @@ export const HeaderModule = () => {
     const [isShowSearchResultBox, setIsShowSearchResultBox] = useState(false);
     const [isSearched, setIsSearched] = useState(false);
     const [isShowLogin, setIsShowLogin] = useState(false);
+    const [isFocused, setIsFocused] = useState(false);
 
     const changeHeaderStatus = () => {
         if (window.scrollY > 50) {
@@ -74,11 +75,13 @@ export const HeaderModule = () => {
     };
 
     const handleShowSearchResultBox = () => {
+        setIsFocused(true);
         if (!isSearched) return;
         setIsShowSearchResultBox(true);
     };
 
     const handleHiddenSearchResultBox = () => {
+        setIsFocused(false);
         setIsShowSearchResultBox(false);
     };
 
@@ -94,6 +97,7 @@ export const HeaderModule = () => {
                 isShowSearchResultBox={isShowSearchResultBox}
                 onShowSearchResultBox={handleShowSearchResultBox}
                 onHiddenSearchResultBox={handleHiddenSearchResultBox}
+                isFocused={isFocused}
             />
             {isShowLogin && (
                 <LoginModalComponent

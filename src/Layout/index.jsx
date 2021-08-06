@@ -11,7 +11,7 @@ import {
 
 import { router } from "src/Routes";
 import { SideBarComponent, StyledBackground } from "src/Components";
-import { HeaderModule } from "src/Modules";
+import { HeaderModule, FooterModule } from "src/Modules";
 
 export const Layout = () => {
     return (
@@ -21,14 +21,14 @@ export const Layout = () => {
                     <Row noGutters>
                         <Column 
                             sizeDesktop={2}
-                            sizeTablet={2}
+                            sizeTablet={3}
                             size={0}
                         >
                             <SideBarComponent />
                         </Column>
                         <Column 
                             sizeDesktop={10}
-                            sizeTablet={10}
+                            sizeTablet={9}
                             size={12}
                         >
                             
@@ -38,6 +38,7 @@ export const Layout = () => {
                                 <Switch>
                                     {router.map((route, index) => <Route key={index} path={route.path} component={route.component} exact />)}
                                 </Switch>
+                                <FooterModule />
                             </div>
                         </Column>
                     </Row>

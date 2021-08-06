@@ -9,7 +9,7 @@ import './index.css';
 import "./grid.css";
 import reportWebVitals from './reportWebVitals';
 import store, { persistor } from 'src/Redux';
-import theme from 'src/Utilities/theme';
+import { theme } from 'src/Utilities';
 
 ReactDOM.render(
   <React.StrictMode>

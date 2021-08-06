@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import { ClipLoader } from "react-spinners";
 
-import { StyledButton } from "src/Components";
-import { SearchResultBox } from "../SearchResultBox";
+import { StyledButton, SearchResultBox } from "src/Components";
+import { breakpoint, useWindowDimensions } from "src/Utilities";
 
 export const HeaderComponent = ({
     isBlur = false,
@@ -15,11 +15,15 @@ export const HeaderComponent = ({
     isShowSearchResultBox = false,
     onShowSearchResultBox = () => {},
     onHiddenSearchResultBox = () => {},
+    isFocused = false
 }) => {
+    const { width } = useWindowDimensions();
     return (
         <Container 
             className="flexCenter" 
             isBlur={isBlur}
+            isFocused={isFocused}
+            width={width}
             initial={{
                 y: -1000
             }}
@@ -80,10 +84,27 @@ const Container = styled(motion.div)`
         box-shadow: 0 3px 7px rgba(0, 0, 0, .3);
         height: 60px;
     ` : ""}
+
+    /* ${breakpoint.breakMobile`
+        justify-content: center;
+    `} */
     
     .menu {
+        .uploadBtn {
+            ${breakpoint.breakMobile`
+                display: none;
+            `}
+        }
+
         .loginBtn {
             margin-left: 10px;
+            display: ${p => p.width < 744 && p.isFocused ? "none" : "block"};
+
+            button {
+                ${breakpoint.breakMobile`
+                    padding: 5px;
+                `}
+            }
         }
     }
 
@@ -108,6 +129,13 @@ const Container = styled(motion.div)`
         margin-left: 30px;
         min-width: 300px;
         position: relative;
+
+        ${breakpoint.breakMobile`
+            padding: 10px 20px;
+            margin-left: 0;
+            min-width: unset;
+            flex: 1;
+        `}
 
         input {
             border: none;
