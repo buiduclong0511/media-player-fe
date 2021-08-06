@@ -1,12 +1,17 @@
 import styled from "styled-components";
 
 export const SearchResultBox = ({
-    searchResult = [],
-    keySearch = ""
+    searchResult = {
+        songs: [],
+        playlists: []
+    },
+    keySearch = "",
+    onClickSearchAll = () => {}
 }) => {
     return (
         <Container>
-            {!!searchResult.length && searchResult.map(item => {
+            {!!searchResult.songs.length && <p className="heading">Bài hát:</p>}
+            {!!searchResult.songs.length && searchResult.songs.map(item => {
                 return (
                     <div className="searchResultItem flexCenter">
                         <div className="thumb">
@@ -19,8 +24,8 @@ export const SearchResultBox = ({
                     </div>
                 );
             })}
-            <div className="showAll searchResultItem">
-                {!!searchResult.length ? `Hiển thị tất cả với: ${keySearch}` : `Không tìm thấy bài hát nào với: ${keySearch}`}
+            <div className="showAll searchResultItem" onClick={onClickSearchAll}>
+                {!!searchResult.songs.length || !!searchResult.playlists.length ? `Hiển thị tất cả với: ${keySearch}` : `Không tìm thấy bài hát nào với: ${keySearch}`}
             </div>
         </Container>
     );
@@ -31,6 +36,10 @@ const Container = styled.div`
     width: 100%;
     border-radius: 10px;
     overflow: hidden;
+
+    .heading {
+        margin: 10px 0 5px 10px;
+    }
 
     .searchResultItem {
         padding: 10px 20px;

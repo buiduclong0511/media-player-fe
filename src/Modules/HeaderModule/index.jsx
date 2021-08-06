@@ -1,19 +1,26 @@
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import { songApi } from "src/Api";
 
 import { HeaderComponent, LoginModalComponent } from "src/Components";
-import { useDebounce } from "src/Utilities";
+import { ENTER_KEY } from "src/Constant";
+import { PATH_SEARCH_RESULT } from "src/Routes";
+import { sleep, useDebounce } from "src/Utilities";
 
 export const HeaderModule = () => {
     const [keySearch, setKeySearch] = useState("");
     const [isSearching, setIsSearching] = useState(false);
     const [isBlur, setIsBlur] = useState(false);
-    const [searchResult, setSearchResult] = useState([]);
+    const [searchResult, setSearchResult] = useState({
+        songs: [],
+        playlists: []
+    });
     const [isShowSearchResultBox, setIsShowSearchResultBox] = useState(false);
     const [isSearched, setIsSearched] = useState(false);
     const [isShowLogin, setIsShowLogin] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
+    const history = useHistory();
 
     const changeHeaderStatus = () => {
         if (window.scrollY > 50) {
@@ -37,7 +44,12 @@ export const HeaderModule = () => {
             const res = await songApi.getListSongs({
                 q: keySearch
             });
-            setSearchResult(res.data.data);
+            setSearchResult((prevState) => {
+                return {
+                    ...prevState,
+                    songs: res.data.data
+                };
+            });
         } catch (err) {
             if (!err.response) {
                 toast.error("Lỗi kết nối!");
@@ -58,7 +70,10 @@ export const HeaderModule = () => {
     }, [isSearched]);
 
     useDebounce(() => {
-        setSearchResult([]);
+        setSearchResult({
+            songs: [],
+            playlists: []
+        });
         if (keySearch.trim()) {
             handleSearch();
         } else if (isSearched) {
@@ -80,9 +95,20 @@ export const HeaderModule = () => {
         setIsShowSearchResultBox(true);
     };
 
-    const handleHiddenSearchResultBox = () => {
+    const handleHiddenSearchResultBox = async () => {
+        await sleep(200);
         setIsFocused(false);
         setIsShowSearchResultBox(false);
+    };
+
+    const handleSwitchToSearchResult = () => {
+        history.push(PATH_SEARCH_RESULT + "/" + keySearch);
+    };
+
+    const handleKeyUpInput = (event) => {
+        if (event.key === ENTER_KEY && searchResult.length) {
+            console.log("enter");
+        }
     };
 
     return (
@@ -98,6 +124,8 @@ export const HeaderModule = () => {
                 onShowSearchResultBox={handleShowSearchResultBox}
                 onHiddenSearchResultBox={handleHiddenSearchResultBox}
                 isFocused={isFocused}
+                onClickSearchAll={handleSwitchToSearchResult}
+                onKeyUpInput={handleKeyUpInput}
             />
             {isShowLogin && (
                 <LoginModalComponent

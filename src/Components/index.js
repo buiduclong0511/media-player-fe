@@ -11,3 +11,4 @@ export * from "./SongItemComponent";
 export * from "./SideBarItemComponent";
 export * from "./LoginModalComponent";
 export * from "./FooterComponent";
+export * from "./SearchResultItem";

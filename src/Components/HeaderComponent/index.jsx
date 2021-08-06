@@ -11,11 +11,13 @@ export const HeaderComponent = ({
     keySearch = "",
     isSearching = false,
     onChangeKeySearch = () => {},
-    searchResult = [],
+    searchResult,
     isShowSearchResultBox = false,
     onShowSearchResultBox = () => {},
     onHiddenSearchResultBox = () => {},
-    isFocused = false
+    isFocused = false,
+    onClickSearchAll,
+    onKeyUpInput = () => {}
 }) => {
     const { width } = useWindowDimensions();
     return (
@@ -38,7 +40,14 @@ export const HeaderComponent = ({
                 <span className="searchIcon">
                     <ion-icon name="search-outline"></ion-icon>
                 </span>
-                <input type="text" value={keySearch} onChange={onChangeKeySearch} onFocus={onShowSearchResultBox} onBlur={onHiddenSearchResultBox} />
+                <input 
+                    type="text" 
+                    value={keySearch} 
+                    onChange={onChangeKeySearch} 
+                    onFocus={onShowSearchResultBox} 
+                    onBlur={onHiddenSearchResultBox} 
+                    onKeyUp={onKeyUpInput}
+                />
                 {isSearching && (
                     <span className="spinner">
                         <ClipLoader size={16} color="#fff" />
@@ -46,7 +55,7 @@ export const HeaderComponent = ({
                 )}
                 {isShowSearchResultBox && (
                     <div className="searchResult">
-                        <SearchResultBox keySearch={keySearch} searchResult={searchResult} />
+                        <SearchResultBox keySearch={keySearch} searchResult={searchResult} onClickSearchAll={onClickSearchAll} />
                     </div>
                 )}
             </div>
