@@ -27,28 +27,28 @@ export const LoginModalComponent = ({ onHiddenLogin = () => {} }) => {
     return (
         <Container className="flexCenter">
             <div className="overlay" onClick={onHiddenLogin}></div>
-            {form === FORM_LOGIN ? (
-                <motion.div className="formWrapper" initial={{
-                    x: 1000
-                }}
-                animate={{
-                    x: 0
-                }}>
-                    <LoginModule onHiddenLogin={onHiddenLogin} />
-                    <p className="switch">Bạn chưa có tài khoản? <span onClick={handleSwitchForm}>Đăng ký</span></p>
-                </motion.div>
-            ) : (
-                <motion.div className="formWrapper"
+            <motion.div 
+                className="formWrapper" 
                 initial={{
                     x: 1000
                 }}
                 animate={{
                     x: 0
-                }}>
-                    <RegisterModule onHiddenLogin={onHiddenLogin} />
+                }}
+            >
+                <button className="closeButton" onClick={onHiddenLogin}>&times;</button>
+                {form === FORM_LOGIN ? (
+                    <>
+                        <LoginModule onHiddenLogin={onHiddenLogin} />
+                        <p className="switch">Bạn chưa có tài khoản? <span onClick={handleSwitchForm}>Đăng ký</span></p>
+                    </>
+                ) : (
+                    <>
+                        <RegisterModule onHiddenLogin={onHiddenLogin} />
                     <p className="switch">Bạn đã có tài khoản? <span onClick={handleSwitchForm}>Đăng nhập</span></p>
-                </motion.div>
-            )}
+                    </>
+                )}
+            </motion.div>
             {isLoading && <LoadingOverLay />}
         </Container>
     );
@@ -79,6 +79,15 @@ const Container = styled.div`
         border-radius: 8px;
         padding: 20px;
         z-index: 2;
+        position: relative;
+
+        .closeButton {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 10px;
+            font-size: 30px;
+        }
     }
 
     .switch {
