@@ -52,7 +52,7 @@ export const Home = () => {
                         const onClickAddBtn = () => handleClickSong(song, ADD_TAG);
                         return (
                             <Column
-                                key={song._id}
+                                key={"" + song.key + Date.now()}
                                 size={12}
                                 sizeTablet={4}
                                 sizeDesktop={2}
@@ -76,7 +76,7 @@ export const Home = () => {
                         const onClickAddBtn = () => handleClickSong(song, ADD_TAG);
                         return (
                             <Column
-                                key={song._id}
+                                key={"" + song.key + Date.now()}
                                 size={12}
                                 sizeTablet={6}
                                 sizeDesktop={3}

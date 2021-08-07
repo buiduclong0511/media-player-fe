@@ -3,13 +3,14 @@ import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-jinke-music-player/assets/index.css'
 import { useDispatch, useSelector } from "react-redux";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 
 import { Layout } from "src/Layout";
-import { addPlayedSong, formLoginSelector, hiddenFormLogin, pause, play, playerSelector, replacePlaylist, updateCurrentSong, updateHistory } from "src/Redux";
+import { addPlayedSong, authSelector, formLoginSelector, hiddenFormLogin, pause, play, playerSelector, replacePlaylist, updateCurrentSong, updateHistory } from "src/Redux";
 import { convertSongInfo } from "src/Utilities";
 import { songApi } from "src/Api";
 import { LoginModalComponent } from "./Components/LoginModalComponent";
+import { PATH_ACCOUNT_SETTING, PATH_HOME } from "./Routes";
 
 
 export const App = () => {
@@ -17,6 +18,7 @@ export const App = () => {
     const listPlaying = playerRedux.playlist;
     const isPlaying = playerRedux.isPlaying;
     const listPlayedSongs = playerRedux.listPlayedSongs;
+    const userInfo = useSelector(authSelector).userInfo;
     const isShowFormLogin = useSelector(formLoginSelector).isShowFormLogin;
     const audioRef = useRef(null);
     const dispatch = useDispatch();
@@ -63,6 +65,13 @@ export const App = () => {
     const handleHiddenLogin = () => {
         dispatch(hiddenFormLogin());
     };
+
+    useEffect(() => {
+        const isAuthPage = window.location.pathname === PATH_ACCOUNT_SETTING;
+        if (!userInfo && isAuthPage) {
+            window.location.assign(PATH_HOME);
+        }
+    }, [userInfo]);
 
     return (
         <div className="App">

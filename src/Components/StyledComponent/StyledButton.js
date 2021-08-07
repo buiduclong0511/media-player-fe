@@ -11,3 +11,13 @@ export const StyledButton = styled.button`
         background-color: ${p => p.theme.colors.secondary};
     }
 `;
+
+export const StyledUpdateButton = styled(StyledButton)`
+    margin-top: 20px;
+    border: 1px solid #fff;
+    background-color: ${p => p.disabled ? "#ccc" : "transparent"};
+
+    &:hover {
+        background-color: ${p => p.disabled ? "#ccc" : p.theme.colors.secondary};
+    }
+`;

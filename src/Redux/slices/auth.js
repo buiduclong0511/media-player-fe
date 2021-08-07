@@ -20,6 +20,15 @@ export const register = createAsyncThunk("auth/register", async (body, { rejectW
     }
 });
 
+export const getInfo = createAsyncThunk("auth/getInfo", async (body, { rejectWithValue }) => {
+    try {
+        const res = await authApi.getInfo();
+        return res.data;
+    } catch (err) {
+        return rejectWithValue(err);
+    }
+});
+
 const initialState = {
     accessToken: null,
     userInfo: null,
@@ -69,6 +78,16 @@ const auth = createSlice({
             state.accessToken = null;
             state.userInfo = null;
             state.isLoading = false;
+        });
+
+        builder.addCase(getInfo.fulfilled, (state, action) => {
+            const { data } = action.payload;
+            state.userInfo = data;
+            state.isLoading = false;
+        })
+
+        builder.addCase(getInfo.pending, (state) => {
+            state.isLoading = true;
         });
     }
 });

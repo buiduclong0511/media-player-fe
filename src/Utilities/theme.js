@@ -21,7 +21,7 @@ export const theme = {
         breakSmall: "320px",
         breakMobile: "540px",
         breakMobileMedium: "575px",
-        breakTablet: "767px",
+        breakTablet: "770px",
         breakOnlyMobile: "768px",
         breakMedium: "980px",
         breakIpadPro: "1024px",

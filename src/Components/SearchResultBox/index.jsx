@@ -13,7 +13,7 @@ export const SearchResultBox = ({
             {!!searchResult.songs.length && <p className="heading">Bài hát:</p>}
             {!!searchResult.songs.length && searchResult.songs.map(item => {
                 return (
-                    <div className="searchResultItem flexCenter">
+                    <div key={item._id} className="searchResultItem flexCenter">
                         <div className="thumb">
                             <img src={item.thumbUrl} alt={item.slug} />
                         </div>

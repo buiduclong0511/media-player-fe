@@ -2,10 +2,12 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import { ClipLoader } from "react-spinners";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 import { StyledButton, SearchResultBox, AvatarComponent } from "src/Components";
 import { breakpoint, useWindowDimensions } from "src/Utilities";
 import { authSelector } from "src/Redux";
+import { PATH_ACCOUNT_SETTING } from "src/Routes";
 
 export const HeaderComponent = ({
     isBlur = false,
@@ -19,10 +21,34 @@ export const HeaderComponent = ({
     onHiddenSearchResultBox = () => {},
     isFocused = false,
     onClickSearchAll,
-    onKeyUpInput = () => {}
+    onKeyUpInput = () => {},
+    onClickLogout = () => {}
 }) => {
     const { width } = useWindowDimensions();
     const userInfo = useSelector(authSelector).userInfo;
+
+    const MenuAccount = () => {
+        return (
+            <Menu>
+                <Link to={PATH_ACCOUNT_SETTING} className="item">
+                    <span className="icon">
+                        <ion-icon name="shield-checkmark-outline"></ion-icon>
+                    </span>
+                    <span className="text">
+                        Tài khoản
+                    </span>
+                </Link>
+                <div className="item" onClick={onClickLogout}>
+                    <span className="icon">
+                        <ion-icon name="log-out-outline"></ion-icon>
+                    </span>
+                    <span className="text">
+                        Đăng xuất
+                    </span>
+                </div>
+            </Menu>
+        );
+    };
     return (
         <Container 
             className="flexCenter" 
@@ -73,10 +99,15 @@ export const HeaderComponent = ({
                 </button>
                 <div className="loginBtn">
                     {userInfo ? (
-                        <AvatarComponent 
-                            // width={50}
-                            avatarUrl={userInfo.avatarUrl}
-                        />
+                        <>
+                            <AvatarComponent 
+                                // width={50}
+                                avatarUrl={userInfo.avatarUrl}
+                            />
+                            <div className="menuAccount">
+                                <MenuAccount />
+                            </div>
+                        </>
                     ) : (
                         <StyledButton onClick={onClickLogin}>
                             Đăng nhập
@@ -87,6 +118,32 @@ export const HeaderComponent = ({
         </Container>
     );
 };
+
+const Menu = styled.div`
+    background-color: ${p => p.theme.colors.secondary};
+    border-radius: 8px;
+    overflow: hidden;
+
+    .item {
+        display: flex;
+        width: 130px;
+        padding: 10px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: ${p => p.theme.colors.main};
+        }
+
+        .icon {
+            margin-right: 10px;
+        }
+
+        .text {
+            display: inline-block;
+            /* width: 100px; */
+        }
+    }
+`;
 
 const Container = styled(motion.div)`
     height: 80px;
@@ -118,6 +175,21 @@ const Container = styled(motion.div)`
         .loginBtn {
             margin-left: 10px;
             display: ${p => p.width < 744 && p.isFocused ? "none" : "block"};
+            position: relative;
+
+            &:hover {
+                .menuAccount {
+                    padding-top: 5px;
+                    display: block;
+                }
+            }
+
+            .menuAccount {
+                position: absolute;
+                top: 100%;
+                right: 0;
+                display: none;
+            }
 
             button {
                 ${breakpoint.breakMobile`

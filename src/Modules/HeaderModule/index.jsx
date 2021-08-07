@@ -6,8 +6,8 @@ import { songApi } from "src/Api";
 
 import { HeaderComponent } from "src/Components";
 import { ENTER_KEY } from "src/Constant";
-import { showFormLogin } from "src/Redux";
-import { PATH_SEARCH_RESULT } from "src/Routes";
+import { logout, showFormLogin } from "src/Redux";
+import { PATH_ACCOUNT_SETTING, PATH_HOME, PATH_SEARCH_RESULT } from "src/Routes";
 import { sleep, useDebounce } from "src/Utilities";
 
 export const HeaderModule = () => {
@@ -114,6 +114,14 @@ export const HeaderModule = () => {
         }
     };
 
+    const handleClickLogout = () => {
+        dispatch(logout());
+        const isAuthPage = window.location.pathname === PATH_ACCOUNT_SETTING;
+        if (isAuthPage) {
+            history.push(PATH_HOME);
+        }
+    };
+
     return (
         <>
             <HeaderComponent 
@@ -129,6 +137,7 @@ export const HeaderModule = () => {
                 isFocused={isFocused}
                 onClickSearchAll={handleSwitchToSearchResult}
                 onKeyUpInput={handleKeyUpInput}
+                onClickLogout={handleClickLogout}
             />
         </>
     );

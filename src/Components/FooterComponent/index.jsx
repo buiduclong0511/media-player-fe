@@ -29,9 +29,9 @@ export const FooterComponent = () => {
     ];
     return (
         <Container className="flexCenter">
-            {itemsModel.map(item => {
+            {itemsModel.map((item, index) => {
                 return (
-                    <Item to={item.link} activeClassName="active" exact>
+                    <Item key={index} to={item.link} activeClassName="active" exact>
                         <ion-icon name={item.iconName}></ion-icon>
                         <span className="text">{item.title}</span>
                     </Item>
