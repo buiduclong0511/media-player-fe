@@ -1,8 +1,7 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { Button } from "@material-ui/core";
 
-import { StyledFormControl, InputComponent } from "src/Components";
+import { StyledFormControl, InputComponent, StyledUpdateButton } from "src/Components";
 
 
 export const FormRegisterComponent = ({
@@ -58,7 +57,7 @@ export const FormRegisterComponent = ({
                 </StyledFormControl>
             </div>
             <div className="loginBtn">
-                <Button variant="contained" fullWidth color="primary" disabled={isSubmitting} type="submit">Register</Button>
+                <StyledUpdateButton variant="contained" disabled={isSubmitting} type="submit">Register</StyledUpdateButton>
             </div>
         </Container>
     );
@@ -79,9 +78,12 @@ const Container = styled(motion.form)`
 
     .heading {
         text-align: center;
-        color: ${p => p.theme.colors.main};
         font-weight: 800;
         font-size: 23px;
         margin-bottom: 10px;
+    }
+
+    .loginBtn {
+        border-top: 1px solid #fff;
     }
 `;

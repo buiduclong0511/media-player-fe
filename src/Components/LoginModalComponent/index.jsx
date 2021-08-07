@@ -75,19 +75,17 @@ const Container = styled.div`
     }
     
     .formWrapper {
-        background-color: #fff;
+        background-color: ${p => p.theme.colors.main};
         border-radius: 8px;
         padding: 20px;
         z-index: 2;
     }
 
     .switch {
-        color: ${p => p.theme.colors.main};
         padding-top: 10px;
         text-align: center;
 
         span {
-            color: ${p => p.theme.colors.main};
             transition: 300ms;
             cursor: pointer;
 
