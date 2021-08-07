@@ -49,7 +49,7 @@ const Container = styled.div`
     display: none;
     background-color: ${p => p.theme.colors.main};
     
-    ${breakpoint.breakMedium`
+    ${breakpoint.breakMobile`
         display: flex;
     `}
 `;

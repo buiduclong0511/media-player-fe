@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import { songApi } from "src/Api";
-import { StyledSearchResultPage, SearchResultSongItem } from "src/Components";
+import { StyledSearchResultPage } from "src/Components";
+import { SearchResultSongItemModule } from "src/Modules";
+import { play, replacePlaylist } from "src/Redux";
+import { convertSongInfo } from "src/Utilities";
 
 export const SearchResult = () => {
     const { keySearch } = useParams();
     const [listResults, setListResults] = useState([]);
+    const dispatch = useDispatch();
     const fetchSongs = async () => {
         try {
             const res = await songApi.getListSongs({
@@ -26,7 +31,21 @@ export const SearchResult = () => {
         <StyledSearchResultPage>
             <div className="songs">
                 <p className="heading">Bài hát:</p>
-                {listResults.map(result => <SearchResultSongItem data={result} key={result._id} />)}
+                {listResults.map((result, index) => {
+                    const handleClickPlay = () => {
+                        const payload = convertSongInfo(result);
+                        dispatch(replacePlaylist([payload]));
+                        dispatch(play());
+                    };
+                    return (
+                        <SearchResultSongItemModule 
+                            key={result._id} 
+                            data={result} 
+                            onClickPlay={handleClickPlay}
+                            index={index}
+                        />
+                    );
+                })}
             </div>
         </StyledSearchResultPage>
     );

@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import { songApi } from "src/Api";
 
-import { HeaderComponent, LoginModalComponent } from "src/Components";
+import { HeaderComponent } from "src/Components";
 import { ENTER_KEY } from "src/Constant";
+import { showFormLogin } from "src/Redux";
 import { PATH_SEARCH_RESULT } from "src/Routes";
 import { sleep, useDebounce } from "src/Utilities";
 
@@ -18,9 +20,9 @@ export const HeaderModule = () => {
     });
     const [isShowSearchResultBox, setIsShowSearchResultBox] = useState(false);
     const [isSearched, setIsSearched] = useState(false);
-    const [isShowLogin, setIsShowLogin] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
     const history = useHistory();
+    const dispatch = useDispatch();
 
     const changeHeaderStatus = () => {
         if (window.scrollY > 50) {
@@ -81,8 +83,8 @@ export const HeaderModule = () => {
         }
     }, 500, [keySearch]);
 
-    const handleToggleLogin = () => {
-        setIsShowLogin(prevState => !prevState);
+    const handleShowLogin = () => {
+        dispatch(showFormLogin());
     };
 
     const handleChangeKeySearch = (event) => {
@@ -106,8 +108,9 @@ export const HeaderModule = () => {
     };
 
     const handleKeyUpInput = (event) => {
-        if (event.key === ENTER_KEY && searchResult.length) {
-            console.log("enter");
+        if (event.key === ENTER_KEY) {
+            handleSwitchToSearchResult();
+            handleHiddenSearchResultBox();
         }
     };
 
@@ -115,7 +118,7 @@ export const HeaderModule = () => {
         <>
             <HeaderComponent 
                 isBlur={isBlur} 
-                onClickLogin={handleToggleLogin} 
+                onClickLogin={handleShowLogin} 
                 keySearch={keySearch}
                 isSearching={isSearching}
                 onChangeKeySearch={handleChangeKeySearch}
@@ -127,11 +130,6 @@ export const HeaderModule = () => {
                 onClickSearchAll={handleSwitchToSearchResult}
                 onKeyUpInput={handleKeyUpInput}
             />
-            {isShowLogin && (
-                <LoginModalComponent
-                    onToggleLogin={handleToggleLogin}
-                />
-            )}
         </>
     );
 };

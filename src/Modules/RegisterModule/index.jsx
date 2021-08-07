@@ -7,7 +7,7 @@ import { FormRegisterComponent } from "src/Components";
 import { register } from "src/Redux";
 import { registerSchema } from "src/Utilities";
 
-export const RegisterModule = ({ onToggleLogin = () => {} }) => {
+export const RegisterModule = ({ onHiddenLogin = () => {} }) => {
     const dispatch = useDispatch();
     const initialValues = {
         email: "",
@@ -23,7 +23,7 @@ export const RegisterModule = ({ onToggleLogin = () => {} }) => {
                     const res = await dispatch(register(body));
                     unwrapResult(res);
                     if (res) {
-                        onToggleLogin();
+                        onHiddenLogin();
                     }
                 } catch (err) {
                     setSubmitting(false);

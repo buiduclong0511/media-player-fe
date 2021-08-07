@@ -69,6 +69,7 @@ export const Home = () => {
             </div>
             <div className="listTopSongs">
                 <h2 className="heading">Nghe gần đây</h2>
+                <p className="noSongs">{listRecently.length === 0 ? "Không có bài hát nào" : ""}</p>
                 <Row>
                     {listRecently.length ? listRecently.map(song => {
                         const onClickPlayBtn = () => handleClickSong(song);

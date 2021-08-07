@@ -1,9 +1,11 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { ClipLoader } from "react-spinners";
+import { useSelector } from "react-redux";
 
-import { StyledButton, SearchResultBox } from "src/Components";
+import { StyledButton, SearchResultBox, AvatarComponent } from "src/Components";
 import { breakpoint, useWindowDimensions } from "src/Utilities";
+import { authSelector } from "src/Redux";
 
 export const HeaderComponent = ({
     isBlur = false,
@@ -20,6 +22,7 @@ export const HeaderComponent = ({
     onKeyUpInput = () => {}
 }) => {
     const { width } = useWindowDimensions();
+    const userInfo = useSelector(authSelector).userInfo;
     return (
         <Container 
             className="flexCenter" 
@@ -69,9 +72,16 @@ export const HeaderComponent = ({
                     </span>
                 </button>
                 <div className="loginBtn">
-                    <StyledButton onClick={onClickLogin}>
-                        Đăng nhập
-                    </StyledButton>
+                    {userInfo ? (
+                        <AvatarComponent 
+                            // width={50}
+                            avatarUrl={userInfo.avatarUrl}
+                        />
+                    ) : (
+                        <StyledButton onClick={onClickLogin}>
+                            Đăng nhập
+                        </StyledButton>
+                    )}
                 </div>
             </div>
         </Container>

@@ -8,7 +8,7 @@ import { LoginModule, RegisterModule } from "src/Modules";
 import { authSelector, closePlayer } from "src/Redux";
 import styled from "styled-components";
 
-export const LoginModalComponent = ({ onToggleLogin = () => {} }) => {
+export const LoginModalComponent = ({ onHiddenLogin = () => {} }) => {
     const [form, setForm] = useState(FORM_LOGIN);
     const dispatch = useDispatch();
     const isLoading = useSelector(authSelector).isLoading;
@@ -26,7 +26,7 @@ export const LoginModalComponent = ({ onToggleLogin = () => {} }) => {
     }, []);
     return (
         <Container className="flexCenter">
-            <div className="overlay" onClick={onToggleLogin}></div>
+            <div className="overlay" onClick={onHiddenLogin}></div>
             {form === FORM_LOGIN ? (
                 <motion.div className="formWrapper" initial={{
                     x: 1000
@@ -34,7 +34,7 @@ export const LoginModalComponent = ({ onToggleLogin = () => {} }) => {
                 animate={{
                     x: 0
                 }}>
-                    <LoginModule onToggleLogin={onToggleLogin} />
+                    <LoginModule onHiddenLogin={onHiddenLogin} />
                     <p className="switch">Bạn chưa có tài khoản? <span onClick={handleSwitchForm}>Đăng ký</span></p>
                 </motion.div>
             ) : (
@@ -45,7 +45,7 @@ export const LoginModalComponent = ({ onToggleLogin = () => {} }) => {
                 animate={{
                     x: 0
                 }}>
-                    <RegisterModule onToggleLogin={onToggleLogin} />
+                    <RegisterModule onHiddenLogin={onHiddenLogin} />
                     <p className="switch">Bạn đã có tài khoản? <span onClick={handleSwitchForm}>Đăng nhập</span></p>
                 </motion.div>
             )}

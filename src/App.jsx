@@ -6,9 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRef } from "react";
 
 import { Layout } from "src/Layout";
-import { addPlayedSong, playerSelector, replacePlaylist, updateHistory } from "src/Redux";
+import { addPlayedSong, formLoginSelector, hiddenFormLogin, pause, play, playerSelector, replacePlaylist, updateCurrentSong, updateHistory } from "src/Redux";
 import { convertSongInfo } from "src/Utilities";
 import { songApi } from "src/Api";
+import { LoginModalComponent } from "./Components/LoginModalComponent";
 
 
 export const App = () => {
@@ -16,6 +17,7 @@ export const App = () => {
     const listPlaying = playerRedux.playlist;
     const isPlaying = playerRedux.isPlaying;
     const listPlayedSongs = playerRedux.listPlayedSongs;
+    const isShowFormLogin = useSelector(formLoginSelector).isShowFormLogin;
     const audioRef = useRef(null);
     const dispatch = useDispatch();
     const volumeRef = useRef(null);
@@ -29,12 +31,14 @@ export const App = () => {
     };
 
     const handleAudioPlay = (audioInfo) => {
-        console.log("play");
         if (!volumeRef.current) {
             audioRef.current.volume = 0.99;
             volumeRef.current = audioRef.current.volume;
         }
-        dispatch(updateHistory(convertSongInfo(audioInfo)));
+        const songInfo = convertSongInfo(audioInfo);
+        dispatch(updateHistory(songInfo));
+        dispatch(updateCurrentSong(songInfo));
+        dispatch(play());
     };
 
     const handleAudioProgress = (audioInfo) => {
@@ -50,6 +54,14 @@ export const App = () => {
                 });
             }
         }
+    };
+
+    const handleAudioPause = () => {
+        dispatch(pause());
+    };
+    
+    const handleHiddenLogin = () => {
+        dispatch(hiddenFormLogin());
     };
 
     return (
@@ -79,7 +91,13 @@ export const App = () => {
                 onAudioListsChange={handlePlaylistChange}
                 onAudioPlay={handleAudioPlay}
                 onAudioProgress={handleAudioProgress}
+                onAudioPause={handleAudioPause}
             />
+            {isShowFormLogin && (
+                <LoginModalComponent
+                    onHiddenLogin={handleHiddenLogin}
+                />
+            )}
         </div>
     );
 };

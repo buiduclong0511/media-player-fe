@@ -1,7 +1,10 @@
+import { toast } from "react-toastify";
+
 const { createSlice } = require("@reduxjs/toolkit");
 
 const initialState = {
     playlist: [],
+    currentSong: null,
     isPlaying: false,
     isClosed: false,
     listPlayedSongs: []
@@ -17,6 +20,7 @@ const player = createSlice({
                 const isExisted = state.playlist.some(item => item.musicSrc === song.musicSrc);
                 if (!isExisted) {
                     state.playlist.push(song);
+                    toast.success("Đã thêm vào danh sách phát!");
                 }
             });
         },
@@ -41,6 +45,9 @@ const player = createSlice({
         },
         addPlayedSong: (state, action) => {
             state.listPlayedSongs.push(action.payload);
+        },
+        updateCurrentSong: (state, action) => {
+            state.currentSong = action.payload;
         }
     }
 });
@@ -55,7 +62,8 @@ export const {
     refreshPlaylist,
     closePlayer,
     openPlayer,
-    addPlayedSong
+    addPlayedSong,
+    updateCurrentSong
 } = player.actions;
 
 export default player.reducer;

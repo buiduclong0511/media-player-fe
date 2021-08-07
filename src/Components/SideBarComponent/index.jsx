@@ -1,8 +1,11 @@
 import { motion } from "framer-motion";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 import { PATH_HOME } from "src/Routes";
 import { SideBarItemComponent } from "src/Components";
+import { useSelector } from "react-redux";
+import { playerSelector } from "src/Redux";
 
 export const SideBarComponent = () => {
     const itemModelTop = [
@@ -31,6 +34,8 @@ export const SideBarComponent = () => {
         },
     ];
 
+    const isPlaying = useSelector(playerSelector).isPlaying;
+
     return (
         <Container
             initial={{
@@ -42,10 +47,14 @@ export const SideBarComponent = () => {
             transition={{
                 duration: .7
             }}
+            isPlaying={isPlaying}
         >
-            <div className="logo flexCenter">
+            <Link to={PATH_HOME} className="logo flexCenter">
                 <img src="images/logos/logo.png" alt="" />
-            </div>
+                <span style={{ "--i": "1s" }} className="ringAnimate"></span>
+                <span style={{ "--i": "2s" }} className="ringAnimate"></span>
+                <span style={{ "--i": "3s" }} className="ringAnimate"></span>
+            </Link>
             <div className="listItem">
                 {itemModelTop.map((item, index) => {
                     return (
@@ -74,6 +83,19 @@ const Container = styled(motion.div)`
 
     .logo {
         padding-top: 5px;
+        position: relative;
+
+        .ringAnimate {
+            position: absolute;
+            display: inline-block;
+            width: 40%;
+            height: 100%;
+            border-radius: 50%;
+            border: 1px solid ${p => p.theme.colors.gray_5};
+            transform: scale(0.7);
+            ${p => p.isPlaying ? "animation: scale 3s infinite var(--i);" : ""}
+            z-index: -1;
+        }
 
         img {
             width: 40%;
@@ -91,6 +113,18 @@ const Container = styled(motion.div)`
         &.listItemBottom {
             border-bottom: none;
             padding-top: 10px;
+        }
+    }
+
+    @keyframes scale {
+        from {
+            transform: scale(0.9);
+            opacity: 1;
+        }
+
+        to {
+            transform: scale(1.5);
+            opacity: 0;
         }
     }
 `;

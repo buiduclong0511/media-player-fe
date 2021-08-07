@@ -9,9 +9,13 @@ export const SongItemComponent = ({
     onClickPlayBtn = () => {},
     onClickAddBtn = () => {}
 }) => {
-    const listPlaying = useSelector(playerSelector).playlist;
+    const playerRedux = useSelector(playerSelector);
+    const listPlaying = playerRedux.playlist;
+    const currentSong = playerRedux.currentSong || {};
     const isExisted = listPlaying.some(song => song.musicSrc === data.musicSrc);
+    const isPlaying = data.musicSrc === currentSong.musicSrc;
     const { width } = useWindowDimensions();
+    // console.log(data.musicSrc, currentSong.musicSrc);
     return (
         <Container>
             {width >= 744 ? (
@@ -19,7 +23,7 @@ export const SongItemComponent = ({
                     <img src={data.cover} alt={data.name} />
                     <div className="groupBtn flexCenter">
                         <button className="playBtn" onClick={onClickPlayBtn}>
-                            <ion-icon name="play-circle-outline"></ion-icon>
+                            <ion-icon name={isPlaying ? "pause-circle-outline" : "play-circle-outline"}></ion-icon>
                         </button>
                         {!isExisted && (
                             <button className="addBtn" onClick={onClickAddBtn}>

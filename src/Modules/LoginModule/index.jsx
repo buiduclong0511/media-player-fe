@@ -7,7 +7,7 @@ import { FormLoginComponent } from "src/Components";
 import { login } from "src/Redux";
 import { loginSchema } from "src/Utilities";
 
-export const LoginModule = ({ onToggleLogin = () => {} }) => {
+export const LoginModule = ({ onHiddenLogin = () => {} }) => {
     const dispatch = useDispatch();
     const initialValuesLogin = {
         email: "buiduclong0511@gmail.com",
@@ -21,7 +21,7 @@ export const LoginModule = ({ onToggleLogin = () => {} }) => {
                     const res = await dispatch(login(values));
                     unwrapResult(res);
                     if (res) {
-                        onToggleLogin();
+                        onHiddenLogin();
                     }
                 } catch (err) {
                     setSubmitting(false);

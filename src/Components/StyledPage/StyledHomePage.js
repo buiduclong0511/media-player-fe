@@ -6,4 +6,10 @@ export const StyledHomePage = styled.div`
     .listTopSongs {
         padding: 20px;
     }
+
+    .noSongs {
+        margin-top: 10px;
+        padding-left: 10px;
+    }
+
 `;
