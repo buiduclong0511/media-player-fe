@@ -73,6 +73,8 @@ export const App = () => {
         }
     }, [userInfo]);
 
+    console.log(listPlaying);
+
     return (
         <div className="App">
             <Layout />
@@ -85,6 +87,7 @@ export const App = () => {
                 rtl={false}
                 draggable
             />
+            <audio autoPlay src={listPlaying[0]?.musicSrc || ""}></audio>
             <ReactJkMusicPlayer 
                 quietUpdate 
                 defaultPosition={{ right: 100, top: 100 }} 
