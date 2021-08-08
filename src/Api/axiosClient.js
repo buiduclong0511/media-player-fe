@@ -4,7 +4,7 @@ import store, { logout } from "src/Redux";
 const queryString = require("query-string");
 
 const axiosClient = axios.create({
-    baseURL: "http://localhost:3001",
+    baseURL: "https://media-player-be.herokuapp.com/",
 
     headers: {
         "Content-Type": "application/json",
