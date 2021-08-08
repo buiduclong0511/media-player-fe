@@ -87,7 +87,7 @@ export const App = () => {
                 rtl={false}
                 draggable
             />
-            <audio autoPlay src={listPlaying[0]?.musicSrc || ""}></audio>
+            <iframe width="410" height="300" src="http://mp3.zing.vn/embed/album/ZWZB0I67?autostart=false" frameborder="0" allowfullscreen="true"></iframe>
             <ReactJkMusicPlayer 
                 quietUpdate 
                 defaultPosition={{ right: 100, top: 100 }} 
