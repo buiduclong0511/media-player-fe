@@ -77,7 +77,7 @@ export const App = () => {
 
     return (
         <div className="App">
-            <iframe width="410" height="300" src="http://mp3.zing.vn/embed/album/ZWZB0I67?autostart=false" frameborder="0" allowfullscreen="true"></iframe>
+            <iframe width="410" height="300" src="http://mp3.zing.vn/embed/album/ZWZB0I67?autostart=true" frameborder="0" allowfullscreen="true"></iframe>
         </div>
     );
 };
