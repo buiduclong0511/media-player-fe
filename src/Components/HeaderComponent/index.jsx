@@ -89,14 +89,6 @@ export const HeaderComponent = ({
                 )}
             </div>
             <div className="menu flexCenter">
-                <button className="uploadBtn flexCenter">
-                    <span className="uploadIcon">
-                        <ion-icon name="cloud-upload-outline"></ion-icon>
-                    </span>
-                    <span className="text">
-                        Upload
-                    </span>
-                </button>
                 <div className="loginBtn">
                     {userInfo ? (
                         <>
@@ -176,6 +168,11 @@ const Container = styled(motion.div)`
             margin-left: 10px;
             display: ${p => p.width < 744 && p.isFocused ? "none" : "block"};
             position: relative;
+            margin-right: 20px;
+
+            ${breakpoint.breakMobile`
+                margin-right: 0px;
+            `}
 
             &:hover {
                 .menuAccount {

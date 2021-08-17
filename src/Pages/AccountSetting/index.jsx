@@ -1,5 +1,4 @@
 import { TextField } from "@material-ui/core";
-import { useRef } from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -12,11 +11,11 @@ export const AccountSetting = () => {
     const userInfo = useSelector(authSelector).userInfo;
     const [updateInfo, setUpdateInfo] = useState({
         username: userInfo.username,
-        avatar: null
+        // avatar: null
     });
     const [isLoading, setIsLoading] = useState(false);
     const [isValidForm, setIsValidForm] = useState(false);
-    const avatarInputRef = useRef(null);
+    // const avatarInputRef = useRef(null);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getInfo());
@@ -30,15 +29,15 @@ export const AccountSetting = () => {
         });
     };
 
-    const handleChangeAvatar = (event) => {
-        setUpdateInfo({
-            ...updateInfo,
-            avatar: event.target.files[0]
-        });
-    };
+    // const handleChangeAvatar = (event) => {
+    //     setUpdateInfo({
+    //         ...updateInfo,
+    //         avatar: event.target.files[0]
+    //     });
+    // };
     
     useEffect(() => {
-        if (!updateInfo.username.trim() || !updateInfo.avatar || updateInfo.username.trim().length > 36) {
+        if (!updateInfo.username.trim() || updateInfo.username.trim().length > 36) {
             setIsValidForm(false);
         } else {
             setIsValidForm(true);
@@ -49,10 +48,10 @@ export const AccountSetting = () => {
         try {
             setIsLoading(true);
             setIsValidForm(false);
-            const formData = new FormData();
-            formData.append("username", updateInfo.username);
-            formData.append("avatar", updateInfo.avatar);
-            await authApi.updateInfo(formData);
+            // formData.append("avatar", updateInfo.avatar);
+            await authApi.updateInfo({
+                username: updateInfo.username
+            });
             toast.success("Cập nhật thành công!");
             dispatch(getInfo());
         } catch (err) {
@@ -93,10 +92,10 @@ export const AccountSetting = () => {
                                 fullWidth
                             />
                         </div>
-                        <div className="updateItem avatar">
+                        {/* <div className="updateItem avatar">
                             <label className="labelAvatar" htmlFor="avatarInput">Avatar:</label><br />
                             <input ref={avatarInputRef} id="avatarInput" type="file" accept="image/*" onChange={handleChangeAvatar} />
-                        </div>
+                        </div> */}
                     </div>
                     <StyledUpdateButton disabled={!isValidForm} onClick={handleUpdate}>
                         Cập nhật

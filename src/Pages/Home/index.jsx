@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { songApi } from "src/Api";
-import { StyledHomePage, SongItemComponent } from "src/Components";
+import { StyledHomePage, SongItemComponent, LoadingComponent } from "src/Components";
 import { concatPlaylist, historySelector, openPlayer, play, replacePlaylist } from "src/Redux";
 import { convertSongInfo } from "src/Utilities";
 
@@ -44,53 +44,59 @@ export const Home = () => {
     };
     return (
         <StyledHomePage>
-            <div className="listTopSongs">
-                <h2 className="heading">Top bài hát nghe nhiều nhất</h2>
-                <Row>
-                    {songs.length ? songs.map(song => {
-                        const onClickPlayBtn = () => handleClickSong(song);
-                        const onClickAddBtn = () => handleClickSong(song, ADD_TAG);
-                        return (
-                            <Column
-                                key={"" + song.key + Date.now()}
-                                size={12}
-                                sizeTablet={4}
-                                sizeDesktop={2}
-                            >
-                                <SongItemComponent
-                                    data={song} 
-                                    onClickPlayBtn={onClickPlayBtn} 
-                                    onClickAddBtn={onClickAddBtn}
-                                />
-                            </Column>
-                        );
-                    }) : <></>}
-                </Row>
-            </div>
-            <div className="listTopSongs">
-                <h2 className="heading">Nghe gần đây</h2>
-                <p className="noSongs">{listRecently.length === 0 ? "Không có bài hát nào" : ""}</p>
-                <Row>
-                    {listRecently.length ? listRecently.map(song => {
-                        const onClickPlayBtn = () => handleClickSong(song);
-                        const onClickAddBtn = () => handleClickSong(song, ADD_TAG);
-                        return (
-                            <Column
-                                key={"" + song.key + Date.now()}
-                                size={12}
-                                sizeTablet={6}
-                                sizeDesktop={3}
-                            >
-                                <SongItemComponent
-                                    data={song} 
-                                    onClickPlayBtn={onClickPlayBtn} 
-                                    onClickAddBtn={onClickAddBtn}
-                                />
-                            </Column>
-                        );
-                    }) : <></>}
-                </Row>
-            </div>
+            {songs.length ? (
+                <>
+                    <div className="listTopSongs">
+                        <h2 className="heading">Top bài hát nghe nhiều nhất</h2>
+                        <Row>
+                            {songs.length ? songs.map(song => {
+                                const onClickPlayBtn = () => handleClickSong(song);
+                                const onClickAddBtn = () => handleClickSong(song, ADD_TAG);
+                                return (
+                                    <Column
+                                        key={"" + song.key + Date.now()}
+                                        size={12}
+                                        sizeTablet={4}
+                                        sizeDesktop={2}
+                                    >
+                                        <SongItemComponent
+                                            data={song} 
+                                            onClickPlayBtn={onClickPlayBtn} 
+                                            onClickAddBtn={onClickAddBtn}
+                                        />
+                                    </Column>
+                                );
+                            }) : <></>}
+                        </Row>
+                    </div>
+                    <div className="listTopSongs">
+                        <h2 className="heading">Nghe gần đây</h2>
+                        <p className="noSongs">{listRecently.length === 0 ? "Không có bài hát nào" : ""}</p>
+                        <Row>
+                            {listRecently.length ? listRecently.map(song => {
+                                const onClickPlayBtn = () => handleClickSong(song);
+                                const onClickAddBtn = () => handleClickSong(song, ADD_TAG);
+                                return (
+                                    <Column
+                                        key={"" + song.key + Date.now()}
+                                        size={12}
+                                        sizeTablet={6}
+                                        sizeDesktop={3}
+                                    >
+                                        <SongItemComponent
+                                            data={song} 
+                                            onClickPlayBtn={onClickPlayBtn} 
+                                            onClickAddBtn={onClickAddBtn}
+                                        />
+                                    </Column>
+                                );
+                            }) : <></>}
+                        </Row>
+                    </div>
+                </>
+            ) : (
+                <LoadingComponent />
+            )}
         </StyledHomePage>
     );
 };

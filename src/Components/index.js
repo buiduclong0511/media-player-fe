@@ -14,3 +14,4 @@ export * from "./FooterComponent";
 export * from "./SearchResultItem";
 export * from "./AddMenuComponent";
 export * from "./AvatarComponent";
+export * from "./LoadingComponent";

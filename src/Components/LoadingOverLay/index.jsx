@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import { PacmanLoader } from "react-spinners";
+import ScaleLoader from "react-spinners/ScaleLoader";
 
 export const LoadingOverLay = () => {
     return (
         <Container className="flexCenter">
-            <PacmanLoader color="#7200A1" />
+            <ScaleLoader color="#36D7B7" />
         </Container>
     );
 };

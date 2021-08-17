@@ -73,11 +73,40 @@ export const App = () => {
         }
     }, [userInfo]);
 
-    console.log(listPlaying);
-
     return (
         <div className="App">
-            <iframe width="410" height="300" src="http://mp3.zing.vn/embed/album/ZWZB0I67?autostart=true" frameborder="0" allowfullscreen="true"></iframe>
+            {/* <Layout /> */}
+            <ToastContainer
+                position="top-right"
+                autoClose={2000}
+                hideProgressBar={true}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                draggable
+            />
+            <ReactJkMusicPlayer 
+                quietUpdate 
+                defaultPosition={{ right: 100, top: 100 }} 
+                audioLists={listPlaying} 
+                showDownload={false}
+                glassBg
+                mode="full"
+                autoPlay={isPlaying}
+                getAudioInstance={getAudioRef}
+                clearPriorAudioLists
+                showThemeSwitch={false}
+                theme={"dark"}
+                onAudioListsChange={handlePlaylistChange}
+                onAudioPlay={handleAudioPlay}
+                onAudioProgress={handleAudioProgress}
+                onAudioPause={handleAudioPause}
+            />
+            {isShowFormLogin && (
+                <LoginModalComponent
+                    onHiddenLogin={handleHiddenLogin}
+                />
+            )}
         </div>
     );
 };
